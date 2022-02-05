@@ -6,7 +6,11 @@ Blockchain technoglogy,也被称为分布式账本技术，是一-种互联网�
 支撑主站后台流量(排序，推荐，搜索等)，提供负载均衡， cache, 容错，按条件分流，统计运行指标美团云计算/云服务的后台应用
 CDN的调度系统，分发系统，监控系统，短域名服务，CDN内部开放平台，运营报表系统以及其他一些小工具等。
 Golang的计算能力很强
-  
+
+src 目录：放置项目和库的源文件；  
+pkg 目录：放置编译后生成的包/库的归档文件；   
+bin 目录：放置编译后生成的可执行文件。  
+
 # Golang
 包声明： package main表示一个可独立执行的程序，每个 Go 应用程序都包含一个名为 main 的包  
 引入包： import "fmt" 告诉 Go 编译器这个程序需要使用 fmt 包（的函数，或其他元素），fmt 包实现了格式化 IO（输入/输出）的函数  
@@ -18,6 +22,7 @@ Go 程序可以由多个标记组成，可以是关键字，标识符，常量�
 fmt.Println("Hello, World!")  
 
 变量： 
+变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
 ```
 var age int
 var a, b int
@@ -34,10 +39,19 @@ b string)
 ```
 数据类型：  
 数字：  int(8,16,32,64)，unit(8,16,32,64)，uintptr（无序号整型）,float(32,64),complex(64,128)实数和虚数，byte，rune  
-字符串  
+int、int8、int16、int32、int64  
+uint、uint8、uint16、uint32、uint64、uintptr  
+byte // uint8 的别名  代表ASCII
+rune // int32 的别名 代表一个 Unicode 码  
+float32、float64  
+complex64、complex128  
+
+字符串: 字符串跨行写用``
 布尔型： var b bool = true  
 派生类：  
 (a) 指针类型（Pointer）  
+var ptr *int(* 指针变量)
+ptr =  &a 将给出变量的实际地址。  获取地址  
 (b) 数组类型  
 (c) 结构化类型(struct)  
 (d) Channel 类型  
@@ -121,8 +135,6 @@ func main() {
 	}
 }
 ```
-var ptr *int(* 指针变量)
-ptr =  &a 将给出变量的实际地址。
 
 ### 条件语句
 if ..elif ..else
@@ -183,6 +195,11 @@ func main() {
 	for k = 0; k < 5; k++ {
 		fmt.Printf("balance[%d] = %f\n", k, balance3[k])
 	}
+}
+
+func main() {
+	fmt.Printf("%f\n", math.Pi)
+	fmt.Printf("%.2f\n", math.Pi) // 用 Printf 函数打印浮点数时可以使用“%f”来控制保留几位小数
 }
 ```
 
@@ -344,4 +361,318 @@ func main() {
         fmt.Println(i, c)
     }
 }
+```
+Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
+Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。  
+var map_variable map[key_data_type]value_data_type  
+map_variable := make(map[key_data_type]value_data_type)  
+
+```
+package main
+
+import "fmt"
+
+func main() {
+    var countryCapitalMap map[string]string /*创建集合 */
+    countryCapitalMap = make(map[string]string)
+
+    /* map插入key - value对,各个国家对应的首都 */
+    countryCapitalMap [ "France" ] = "巴黎"
+    countryCapitalMap [ "Italy" ] = "罗马"
+    countryCapitalMap [ "Japan" ] = "东京"
+    countryCapitalMap [ "India " ] = "新德里"
+
+    /*使用键输出地图值 */
+    for country := range countryCapitalMap {
+        fmt.Println(country, "首都是", countryCapitalMap [country])
+    }
+
+    /*查看元素在集合中是否存在 */
+    capital, ok := countryCapitalMap [ "American" ] /*如果确定是真实的,则存在,否则不存在 */
+    /*fmt.Println(capital) */
+    /*fmt.Println(ok) */
+    if (ok) {
+        fmt.Println("American 的首都是", capital)
+    } else {
+        fmt.Println("American 的首都不存在")
+    }
+}
+```
+delete() 函数用于删除集合的元素, 参数为 map 和其对应的 key
+```
+package main
+
+import "fmt"
+
+func main() {
+        /* 创建map */
+        countryCapitalMap := map[string]string{"France": "Paris", "Italy": "Rome", "Japan": "Tokyo", "India": "New delhi"}
+
+        fmt.Println("原始地图")
+
+        /* 打印地图 */
+        for country := range countryCapitalMap {
+                fmt.Println(country, "首都是", countryCapitalMap [ country ])
+        }
+
+        /*删除元素*/ delete(countryCapitalMap, "France")
+        fmt.Println("法国条目被删除")
+
+        fmt.Println("删除元素后地图")
+
+        /*打印地图*/
+        for country := range countryCapitalMap {
+                fmt.Println(country, "首都是", countryCapitalMap [ country ])
+        }
+}
+```
+### 递归函数  
+```
+//阶乘
+package main
+
+import "fmt"
+
+func Factorial(n uint64)(result uint64) {
+    if (n > 0) {
+        result = n * Factorial(n-1)
+        return result
+    }
+    return 1
+}
+
+func main() {  
+    var i int = 15
+    fmt.Printf("%d 的阶乘是 %d\n", i, Factorial(uint64(i)))
+}
+```
+// 斐波那契数列
+```
+package main
+
+import "fmt"
+
+func fibonacci(n int) int {
+	if n < 2 {
+		return n
+	}
+	return fibonacci(n-2) + fibonacci(n-1)
+
+}
+
+func main() {
+	var i int
+	for i = 0; i < 10; i++ {
+		fmt.Printf("%d \t", fibonacci(i))
+	}
+
+}
+```
+#### 数据转换
+type_name(expression)  
+b = int32(a)  
+ mean = float32(sum)/float32(count)  
+ ```
+ package main
+
+import "fmt"
+
+func main() {
+	var sum int = 17
+	var count int = 5
+	var mean float32
+
+	mean = float32(sum) / float32(count)
+	fmt.Printf("mean的值为： %f\n", mean)
+}
+ ```
+ 
+ ### 接口
+ Go 语言提供了另外一种数据类型即接口，它把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。
+ ```
+ /* 定义接口 */
+type interface_name interface {
+   method_name1 [return_type]
+   method_name2 [return_type]
+   method_name3 [return_type]
+   ...
+   method_namen [return_type]
+}
+
+/* 定义结构体 */
+type struct_name struct {
+   /* variables */
+}
+
+/* 实现接口方法 */
+func (struct_name_variable struct_name) method_name1() [return_type] {
+   /* 方法实现 */
+}
+...
+func (struct_name_variable struct_name) method_namen() [return_type] {
+   /* 方法实现*/
+}
+ ```
+ ```
+ package main
+
+import (
+    "fmt"
+)
+
+type Phone interface {
+    call()
+}
+
+type NokiaPhone struct {
+}
+
+func (nokiaPhone NokiaPhone) call() {
+    fmt.Println("I am Nokia, I can call you!")
+}
+
+type IPhone struct {
+}
+
+func (iPhone IPhone) call() {
+    fmt.Println("I am iPhone, I can call you!")
+}
+
+func main() {
+    var phone Phone
+
+    phone = new(NokiaPhone)
+    phone.call()
+
+    phone = new(IPhone)
+    phone.call()
+
+}
+ ```
+ ### 处理错误
+ ```
+ package main
+
+import (
+    "fmt"
+)
+
+// 定义一个 DivideError 结构
+type DivideError struct {
+    dividee int
+    divider int
+}
+
+// 实现 `error` 接口
+func (de *DivideError) Error() string {
+    strFormat := `
+    Cannot proceed, the divider is zero.
+    dividee: %d
+    divider: 0
+`
+    return fmt.Sprintf(strFormat, de.dividee)
+}
+
+// 定义 `int` 类型除法运算的函数
+func Divide(varDividee int, varDivider int) (result int, errorMsg string) {
+    if varDivider == 0 {
+            dData := DivideError{
+                    dividee: varDividee,
+                    divider: varDivider,
+            }
+            errorMsg = dData.Error()
+            return
+    } else {
+            return varDividee / varDivider, ""
+    }
+
+}
+
+func main() {
+
+    // 正常情况
+    if result, errorMsg := Divide(100, 10); errorMsg == "" {
+            fmt.Println("100/10 = ", result)
+    }
+    // 当除数为零的时候会返回错误信息
+    if _, errorMsg := Divide(100, 0); errorMsg != "" {
+            fmt.Println("errorMsg is: ", errorMsg)
+    }
+
+}
+ ```
+ ### goroutine 并发
+ goroutine 是轻量级线程，goroutine 的调度是由 Golang 运行时进行管理的。  
+ go 函数名( 参数列表 )  
+ go f(x, y, z)
+ 
+ ### 通道
+ 通道（channel）是用来传递数据的一个数据结构。
+
+通道可用于两个 goroutine 之间通过传递一个指定类型的值来同步运行和通讯。操作符 <- 用于指定通道的方向，发送或接收。如果未指定方向，则为双向通道。
+```
+ch <- v    // 把 v 发送到通道 ch
+v := <-ch  // 从 ch 接收数据
+           // 并把值赋给 v
+```
+ch := make(chan int) // 声明一个通道很简单，我们使用chan关键字即可
+```
+package main
+
+import "fmt"
+
+func sum(s []int, c chan int) {
+        sum := 0
+        for _, v := range s {
+                sum += v
+        }
+        c <- sum // 把 sum 发送到通道 c
+}
+
+func main() {
+        s := []int{7, 2, 8, -9, 4, 0}
+
+        c := make(chan int)
+        go sum(s[:len(s)/2], c)
+        go sum(s[len(s)/2:], c)
+        x, y := <-c, <-c // 从通道 c 中接收
+
+        fmt.Println(x, y, x+y)
+}
+```
+通道可以设置缓冲区，通过 make 的第二个参数指定缓冲区大小：
+ch := make(chan int, 100)
+
+
+web：
+gin，echo，beego，iris，buffalo，revel
+delve调试器
+
+### 标准库
+```
+bufio	带缓冲的 I/O 操作
+bytes	实现字节操作
+container	封装堆、列表和环形列表等容器
+crypto	加密算法
+database	数据库驱动和接口
+debug	各种调试文件格式访问及调试功能
+encoding	常见算法如 JSON、XML、Base64 等
+flag	命令行解析
+fmt	格式化操作
+go	Go语言的词法、语法树、类型等。可通过这个包进行代码信息提取和修改
+html	HTML 转义及模板系统
+image	常见图形格式的访问及生成
+io	实现 I/O 原始访问接口及访问封装
+math	数学库
+net	网络库，支持 Socket、HTTP、邮件、RPC、SMTP 等
+os	操作系统平台不依赖平台操作封装
+path	兼容各操作系统的路径操作实用函数
+plugin	Go 1.7 加入的插件系统。支持将代码编译为插件，按需加载
+reflect	语言反射支持。可以动态获得代码中的类型信息，获取和修改变量的值
+regexp	正则表达式封装
+runtime	运行时接口
+sort	排序接口
+strings	字符串转换、解析及实用函数
+time	时间接口
+text	文本模板及 Token 词法器
 ```
