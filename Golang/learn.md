@@ -1,3 +1,12 @@
+Golang的应用方向:
+区块链技术:简称BT  
+Blockchain technoglogy,也被称为分布式账本技术，是一-种互联网数据库技术，其特点是去中心化，公开透明，让每个人均可参与数据库记录。  
+
+后端服务器应用:
+支撑主站后台流量(排序，推荐，搜索等)，提供负载均衡， cache, 容错，按条件分流，统计运行指标美团云计算/云服务的后台应用
+CDN的调度系统，分发系统，监控系统，短域名服务，CDN内部开放平台，运营报表系统以及其他一些小工具等。
+Golang的计算能力很强
+  
 # Golang
 包声明： package main表示一个可独立执行的程序，每个 Go 应用程序都包含一个名为 main 的包  
 引入包： import "fmt" 告诉 Go 编译器这个程序需要使用 fmt 包（的函数，或其他元素），fmt 包实现了格式化 IO（输入/输出）的函数  
@@ -10,8 +19,329 @@ fmt.Println("Hello, World!")
 
 变量： 
 ```
-var age int;
-fruit = apples + oranges; 
+var age int
+var a, b int
 
+var b,c int = 1, 2  
+var x string = "Roomb"  
+fruit = apples + oranges
+var d = true
+f := "Runoob" // var f string = "Runoob"  := 左侧的变量不应该是已经被声明过的，否则会导致编译错误,这种不带声明格式的只能在函数体中出现  
+全局变量：
+var (
+a int
+b string)  
 ```
 数据类型：  
+数字：  int(8,16,32,64)，unit(8,16,32,64)，uintptr（无序号整型）,float(32,64),complex(64,128)实数和虚数，byte，rune  
+字符串  
+布尔型： var b bool = true  
+派生类：  
+(a) 指针类型（Pointer）  
+(b) 数组类型  
+(c) 结构化类型(struct)  
+(d) Channel 类型  
+(e) 函数类型  
+(f) 切片类型  
+(g) 接口类型（interface）  
+(h) Map 类型  
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	_, numb, strs := numbers()//只获取函数返回值的后两个
+	fmt.Println(numb, strs)
+}
+
+//一个可以返回多个值的函数
+func numbers() (int, int, string) {
+	a, b, c := 1, 2, "str"
+	return a, b, c
+}
+```
+
+常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。  
+常量还可以用作枚举  
+iota，特殊常量，可以认为是一个可以被编译器修改的常量。  
+```
+package main
+
+import "unsafe"
+
+const (
+	a = "abc"
+	b = len(a)
+	c = unsafe.Sizeof(a)
+)
+
+func main() {
+	println(a, b, c)
+}
+
+
+package main
+
+import "fmt"
+
+func main() {
+    const (
+            a = iota   //0
+            b          //1
+            c          //2
+            d = "ha"   //独立值，iota += 1
+            e          //"ha"   iota += 1
+            f = 100    //iota +=1
+            g          //100  iota +=1
+            h = iota   //7,恢复计数
+            i          //8
+    )
+    fmt.Println(a,b,c,d,e,f,g,h,i)
+}
+0 1 2 ha ha 100 100 7 8
+```
+a ++ 自增
+a -- 自减
+&& and || or ! not
+```
+package main
+
+import "fmt"
+
+func main() {
+	var a = true
+	var b = false
+	if a || b {
+		fmt.Printf("第一行 -条件为 true \n")
+	}
+	if a && b {
+		print("第二行 - 条件为true\n")
+	}
+}
+```
+var ptr *int(* 指针变量)
+ptr =  &a 将给出变量的实际地址。
+
+### 条件语句
+if ..elif ..else
+switch  
+select  
+循环：for
+break,continue,goto(将控制转移到被标记的语句)
+
+## 函数
+func max(num1, num2 int) int { //输入的类型是int 返回的类型是int  
+func function_name( [parameter list] ) [return_types] {
+
+### 数组
+var balance[10] int 长度为10的整数类型数组  
+var balance = [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
+balance := [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}    
+长度不确定，可以用。。。代替  
+var balance = [...]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
+var salary float32 = balance[9] 数组元素  
+```
+package main
+
+import "fmt"
+
+func main() {
+   var n [10]int /* n 是一个长度为 10 的数组 */
+   var i,j int
+
+   /* 为数组 n 初始化元素 */        
+   for i = 0; i < 10; i++ {
+      n[i] = i + 100 /* 设置元素为 i + 100 */
+   }
+
+   /* 输出每个数组元素的值 */
+   for j = 0; j < 10; j++ {
+      fmt.Printf("Element[%d] = %d\n", j, n[j] )
+   }
+}
+
+
+package main
+
+import "fmt"
+
+func main() {
+	var i, j, k int
+	balance := [5]float32{100.0, 2.0, 3.4, 7.0, 50.0}
+
+	for i = 0; i < 5; i++ {
+		fmt.Printf("balance[%d] = %f\n", i, balance[i])
+	}
+
+	balance2 := [...]float32{1000.0, 2.0, 3.4, 7.0, 50.0}
+	for j = 0; j < 5; j++ {
+		fmt.Printf("balance[%d] = %f \n", j, balance2[j])
+	}
+	balance3 := [5]float32{1: 2.0, 3: 7.0}
+	for k = 0; k < 5; k++ {
+		fmt.Printf("balance[%d] = %f\n", k, balance3[k])
+	}
+}
+```
+
+一个指针变量指向了一个值的内存地址。  
+var var_name *var-type  
+var ip *int        /* 指向整型*/  
+var fp *float32    /* 指向浮点型 */  
+
+nil 指针也称为空指针。
+nil在概念上和其它语言的null、None、nil、NULL一样，都指代零值或空值。
+一个指针变量通常缩写为 ptr。
+if(ptr == nil) 
+```
+type struct_variable_type struct {
+   member definition
+   member definition
+   ...
+   member definition
+}
+
+type Books struct {
+	title   string
+	author  string
+	subject string
+	book_id int
+}
+
+func main() {
+	fmt.Println(Books{"Go 语言", "www.runoob.com", "Go 语言教程", 6495407})
+
+	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com", subject: "Go 语言教程", book_id: 6495407})
+
+	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com"})
+}
+
+variable_name := structure_variable_type {value1, value2...valuen}
+或
+variable_name := structure_variable_type { key1: value1, key2: value2..., keyn: valuen}
+
+package main
+
+import "fmt"
+
+type Books struct {
+	title   string
+	author  string
+	subject string
+	book_id int
+}
+
+func main() {
+	var Book1 Books
+	var Book2 Books
+
+	Book1.title = "GO 语言"
+	Book1.author = "www.runoob.com"
+	Book1.subject = "Go 语言教程"
+	Book1.book_id = 6495407
+
+	Book2.title = "Python 教程"
+	Book2.author = "www.runoob.com"
+	Book2.subject = "Go 语言教程"
+	Book2.book_id = 6495700
+
+	fmt.Printf("Book 1 title : %s\n", Book1.title)
+	fmt.Printf("Book 1 author : %s\n", Book1.author)
+	fmt.Printf("Book 1 subject : %s\n", Book1.subject)
+	fmt.Printf("Book 1 book_id : %d\n", Book1.book_id)
+
+	/* 打印 Book2 信息 */
+	fmt.Printf("Book 2 title : %s\n", Book2.title)
+	fmt.Printf("Book 2 author : %s\n", Book2.author)
+	fmt.Printf("Book 2 subject : %s\n", Book2.subject)
+	fmt.Printf("Book 2 book_id : %d\n", Book2.book_id)
+}
+
+结构体指针
+var struct_pointer *Books  
+struct_pointer = &Book1  指针变量可以存储结构体变量的地址  
+struct_pointer.title  使用结构体指针访问结构体成员，使用 "." 操作符：  
+```
+
+### 语言切片（slice）  
+Go 语言切片是对数组的抽象。
+Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。
+cap() 可以测量切片最长可以达到多少  
+```
+通过内置函数 make() 初始化切片s，[]int 标识为其元素类型为 int 的切片。  
+var identifier []type  
+var numbers []int  
+capacity 为可选参数
+var slice1 []type = make([]type, len) // slice1 := make([]type, len)
+var numbers = make([]int, 3, 5)
+
+package main
+
+import "fmt"
+
+func main() {
+   var numbers []int
+   printSlice(numbers)
+
+   /* 允许追加空切片 */
+   numbers = append(numbers, 0)
+   printSlice(numbers)
+
+   /* 向切片添加一个元素 */
+   numbers = append(numbers, 1)
+   printSlice(numbers)
+
+   /* 同时添加多个元素 */
+   numbers = append(numbers, 2,3,4)
+   printSlice(numbers)
+
+   /* 创建切片 numbers1 是之前切片的两倍容量*/
+   numbers1 := make([]int, len(numbers), (cap(numbers))*2)
+
+   /* 拷贝 numbers 的内容到 numbers1 */
+   copy(numbers1,numbers)
+   printSlice(numbers1)  
+}
+
+func printSlice(x []int){
+   fmt.Printf("len=%d cap=%d slice=%v\n",len(x),cap(x),x)
+}
+
+len=0 cap=0 slice=[]
+len=1 cap=1 slice=[0]
+len=2 cap=2 slice=[0 1]
+len=5 cap=6 slice=[0 1 2 3 4]
+len=5 cap=12 slice=[0 1 2 3 4]
+```
+range  
+迭代数组(array)、切片(slice)、通道(channel)或集合(map)  
+```
+package main
+import "fmt"
+func main() {
+    //这是我们使用range去求一个slice的和。使用数组跟这个很类似
+    nums := []int{2, 3, 4}
+    sum := 0
+    for _, num := range nums {
+        sum += num
+    }
+    fmt.Println("sum:", sum)
+    //在数组上使用range将传入index和值两个变量。上面那个例子我们不需要使用该元素的序号，所以我们使用空白符"_"省略了。有时侯我们确实需要知道它的索引。
+    for i, num := range nums {
+        if num == 3 {
+            fmt.Println("index:", i)
+        }
+    }
+    //range也可以用在map的键值对上。
+    kvs := map[string]string{"a": "apple", "b": "banana"}
+    for k, v := range kvs {
+        fmt.Printf("%s -> %s\n", k, v)
+    }
+    //range也可以用来枚举Unicode字符串。第一个参数是字符的索引，第二个是字符（Unicode的值）本身。
+    for i, c := range "go" {
+        fmt.Println(i, c)
+    }
+}
+```
