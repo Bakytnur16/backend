@@ -10,6 +10,13 @@ Golang的计算能力很强
 src 目录：放置项目和库的源文件；  
 pkg 目录：放置编译后生成的包/库的归档文件；   
 bin 目录：放置编译后生成的可执行文件。  
+token
+keyword25个: beak func go goto interface不认识的： defer（延迟执行），fallthrough，goto（跳转语句），select，go（并发语法） 
+
+Cookies是由服务器产生的。  浏览器第一次访问服务端时，服务器此时肯定不知道他的身份，所以创建一个独特的身份标识数据，格式为key=value，放入到Set-Cookie字段里，随着响应报文发给浏览器。 服务端收到请求报文后，发现Cookie字段中有值，就能根据此值识别用户的身份然后提供个性化的服务。
+Cookie是存储在客户端方，Session是存储在服务端方，客户端只存储SessionId   
+Token是在服务端将用户信息经过Base64Url编码过后传给在客户端，每次用户请求的时候都会带上这一段信息，因此服务端拿到此信息进行解密后就知道此用户是谁了，这个方法叫做JWT(Json Web Token)。
+Token 使服务端无状态化，不会存储会话信息。  
 
 # Golang
 包声明： package main表示一个可独立执行的程序，每个 Go 应用程序都包含一个名为 main 的包  
@@ -21,45 +28,62 @@ bin 目录：放置编译后生成的可执行文件。
 Go 程序可以由多个标记组成，可以是关键字，标识符，常量，字符串，符号。如以下 GO 语句由 6 个标记组成
 fmt.Println("Hello, World!")  
 
-变量： 
-变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
-```
-var age int
-var a, b int
+## 数据类型：  
+**整型：**  int(8,16,32,64)，unit(8,16,32,64)，uintptr（无序号整型），byte  
+**字符串类型：**
+> byte // uint8 的别名  代表ASCII  
+> rune // int32 的别名 代表一个 Unicode 码   
+字符串跨行写用``
 
-var b,c int = 1, 2  
-var x string = "Roomb"  
-fruit = apples + oranges
-var d = true
-f := "Runoob" // var f string = "Runoob"  := 左侧的变量不应该是已经被声明过的，否则会导致编译错误,这种不带声明格式的只能在函数体中出现  
-全局变量：
-var (
-a int
-b string)  
-```
-数据类型：  
-数字：  int(8,16,32,64)，unit(8,16,32,64)，uintptr（无序号整型）,float(32,64),complex(64,128)实数和虚数，byte，rune  
-int、int8、int16、int32、int64  
-uint、uint8、uint16、uint32、uint64、uintptr  
-byte // uint8 的别名  代表ASCII
-rune // int32 的别名 代表一个 Unicode 码  
-float32、float64  
-complex64、complex128  
+**浮点类型：** float32、float64  
+此两个浮点数之间不应该使用＝或  
+进行比较操作，高精度科学计算应该使用 math 标准库  
 
-字符串: 字符串跨行写用``
-布尔型： var b bool = true  
-派生类：  
-(a) 指针类型（Pointer）  
+**复数类型：** complex64、complex128  
+**布尔型：**  var b bool = true  
+**接口类型（interface）** ： error  
+空白标识符： _,  
+
+
+**指针类型（Pointer):**  用*  
+- 一个指针变量指向了一个值的内存地址。  
+var var_name *var-type  
+var ip *int        /* 指向整型*/  
+var fp *float32    /* 指向浮点型 */  
 var ptr *int(* 指针变量)
 ptr =  &a 将给出变量的实际地址。  获取地址  
-(b) 数组类型  
-(c) 结构化类型(struct)  
-(d) Channel 类型  
-(e) 函数类型  
-(f) 切片类型  
-(g) 接口类型（interface）  
-(h) Map 类型  
+访问结构体用 '.'  
+- nil 指针也称为空指针。
+nil在概念上和其它语言的null、None、nil、NULL一样，都指代零值或空值。
+- 一个指针变量通常缩写为 ptr。
+if(ptr == nil) 
+- 结构体指针
+var struct_pointer *Books  
+struct_pointer = &Book1  指针变量可以存储结构体变量的地址  
+struct_pointer.title  使用结构体指针访问结构体成员，使用 "." 操作符：  
+```
+type Books struct {
+	title   string
+	author  string
+	subject string
+	book_id int
+}
 
+func main() {
+	var Book1 Books
+	var Book2 Books
+
+	Book1.title = "GO 语言"
+	Book1.author = "www.runoob.com"
+	Book1.subject = "Go 语言教程"
+	Book1.book_id = 6495407
+```
+**数组:**  
++ 结构化类型(struct)  
++ Channel 类型:chan  
++ 函数类型  
++ 切片类型  
++ Map 类型:类似python的字典    
 ```
 package main
 
@@ -76,11 +100,32 @@ func numbers() (int, int, string) {
 	return a, b, c
 }
 ```
+## 变量： 
+变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
+```
+var age int
+var a, b int
+var b,c int = 1, 2  
+var x string = "Roomb"  
+fruit = apples + oranges
+var d = true
+f := "Runoob" // var f string = "Runoob"  := 左侧的变量不应该是已经被声明过的，否则会导致编译错误,这种不带声明格式的只能在函数体中出现  
+全局变量：
+var (
+a int
+b string)  
+```
 
+## 常量
 常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。  
 常量还可以用作枚举  
 iota，特殊常量，可以认为是一个可以被编译器修改的常量。  
 ```
+const (
+	a = iota
+	b
+	c
+)#等于0，1，2
 package main
 
 import "unsafe"
@@ -203,15 +248,6 @@ func main() {
 }
 ```
 
-一个指针变量指向了一个值的内存地址。  
-var var_name *var-type  
-var ip *int        /* 指向整型*/  
-var fp *float32    /* 指向浮点型 */  
-
-nil 指针也称为空指针。
-nil在概念上和其它语言的null、None、nil、NULL一样，都指代零值或空值。
-一个指针变量通常缩写为 ptr。
-if(ptr == nil) 
 ```
 type struct_variable_type struct {
    member definition
@@ -276,10 +312,6 @@ func main() {
 	fmt.Printf("Book 2 book_id : %d\n", Book2.book_id)
 }
 
-结构体指针
-var struct_pointer *Books  
-struct_pointer = &Book1  指针变量可以存储结构体变量的地址  
-struct_pointer.title  使用结构体指针访问结构体成员，使用 "." 操作符：  
 ```
 
 ### 语言切片（slice）  
