@@ -78,121 +78,8 @@ func main() {
 	Book1.subject = "Go 语言教程"
 	Book1.book_id = 6495407
 ```
-**数组:**  
-+ 结构化类型(struct)  
-+ Channel 类型:chan  
-+ 函数类型  
-+ 切片类型  
-+ Map 类型:类似python的字典    
-```
-package main
-
-import "fmt"
-
-func main() {
-	_, numb, strs := numbers()//只获取函数返回值的后两个
-	fmt.Println(numb, strs)
-}
-
-//一个可以返回多个值的函数
-func numbers() (int, int, string) {
-	a, b, c := 1, 2, "str"
-	return a, b, c
-}
-```
-## 变量： 
-变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
-```
-var age int
-var a, b int
-var b,c int = 1, 2  
-var x string = "Roomb"  
-fruit = apples + oranges
-var d = true
-f := "Runoob" // var f string = "Runoob"  := 左侧的变量不应该是已经被声明过的，否则会导致编译错误,这种不带声明格式的只能在函数体中出现  
-全局变量：
-var (
-a int
-b string)  
-```
-
-## 常量
-常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。  
-常量还可以用作枚举  
-iota，特殊常量，可以认为是一个可以被编译器修改的常量。  
-```
-const (
-	a = iota
-	b
-	c
-)#等于0，1，2
-package main
-
-import "unsafe"
-
-const (
-	a = "abc"
-	b = len(a)
-	c = unsafe.Sizeof(a)
-)
-
-func main() {
-	println(a, b, c)
-}
-
-
-package main
-
-import "fmt"
-
-func main() {
-    const (
-            a = iota   //0
-            b          //1
-            c          //2
-            d = "ha"   //独立值，iota += 1
-            e          //"ha"   iota += 1
-            f = 100    //iota +=1
-            g          //100  iota +=1
-            h = iota   //7,恢复计数
-            i          //8
-    )
-    fmt.Println(a,b,c,d,e,f,g,h,i)
-}
-0 1 2 ha ha 100 100 7 8
-```
-a ++ 自增
-a -- 自减
-&& and || or ! not
-```
-package main
-
-import "fmt"
-
-func main() {
-	var a = true
-	var b = false
-	if a || b {
-		fmt.Printf("第一行 -条件为 true \n")
-	}
-	if a && b {
-		print("第二行 - 条件为true\n")
-	}
-}
-```
-
-### 条件语句
-if ..elif ..else
-switch  
-select  
-循环：for
-break,continue,goto(将控制转移到被标记的语句)
-
-## 函数
-func max(num1, num2 int) int { //输入的类型是int 返回的类型是int  
-func function_name( [parameter list] ) [return_types] {
-
-### 数组
+**数组:**   
+n emetType  
 var balance[10] int 长度为10的整数类型数组  
 var balance = [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
 balance := [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}    
@@ -314,7 +201,12 @@ func main() {
 
 ```
 
-### 语言切片（slice）  
+
++ 结构化类型(struct)  
++ Channel 类型:chan  
++ 函数类型  
+
+**切片类型(slice)：**  
 Go 语言切片是对数组的抽象。
 Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。
 cap() 可以测量切片最长可以达到多少  
@@ -364,6 +256,149 @@ len=2 cap=2 slice=[0 1]
 len=5 cap=6 slice=[0 1 2 3 4]
 len=5 cap=12 slice=[0 1 2 3 4]
 ```
+
++ Map 类型:类似python的字典    
+```
+package main
+
+import "fmt"
+
+func main() {
+	_, numb, strs := numbers()//只获取函数返回值的后两个
+	fmt.Println(numb, strs)
+}
+
+//一个可以返回多个值的函数
+func numbers() (int, int, string) {
+	a, b, c := 1, 2, "str"
+	return a, b, c
+}
+```
+## 变量： 
+变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
+```
+var age int
+var a, b int
+var b,c int = 1, 2  
+var x string = "Roomb"  
+fruit = apples + oranges
+var d = true
+f := "Runoob" // var f string = "Runoob"  := 左侧的变量不应该是已经被声明过的，否则会导致编译错误,这种不带声明格式的只能在函数体中出现  
+全局变量：
+var (
+a int
+b string)  
+```
+
+## 常量
+常量中的数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。  
+常量还可以用作枚举  
+iota，特殊常量，可以认为是一个可以被编译器修改的常量。  
+```
+const (
+	a = iota
+	b
+	c
+)#等于0，1，2
+package main
+
+import "unsafe"
+
+const (
+	a = "abc"
+	b = len(a)
+	c = unsafe.Sizeof(a)
+)
+
+func main() {
+	println(a, b, c)
+}
+
+
+package main
+
+import "fmt"
+
+func main() {
+    const (
+            a = iota   //0
+            b          //1
+            c          //2
+            d = "ha"   //独立值，iota += 1
+            e          //"ha"   iota += 1
+            f = 100    //iota +=1
+            g          //100  iota +=1
+            h = iota   //7,恢复计数
+            i          //8
+    )
+    fmt.Println(a,b,c,d,e,f,g,h,i)
+}
+0 1 2 ha ha 100 100 7 8
+```
+a ++ 自增
+a -- 自减
+&& and || or ! not
+```
+package main
+
+import "fmt"
+
+func main() {
+	var a = true
+	var b = false
+	if a || b {
+		fmt.Printf("第一行 -条件为 true \n")
+	}
+	if a && b {
+		print("第二行 - 条件为true\n")
+	}
+}
+```
+
+### 条件语句
+if ..elif ..else
+switch  
+select  
+循环：for
+break,continue,goto(将控制转移到被标记的语句)
+```
+a := [5]int{1, 2, 3, 4, 5}
+for k := range a {
+	fmt.Println(k)
+}#只打印序列0，1，2，3，4
+
+for k，v := range a {
+	fmt.Println(k,v)
+}#打印序列和值
+0 1
+1 2
+2 3
+3 4
+4 5
+
+func main() {
+	a := [5]int{1, 2, 3, 4, 5}
+	for _, v := range a {
+		fmt.Println(v)
+	}
+}
+1
+2
+3
+4
+5
+
+a := [5]int{1, 2, 3, 4, 5}
+b := len(a)
+for i := 0; i < b; i++ {
+	print(i)
+}
+```
+
+## 函数
+func max(num1, num2 int) int { //输入的类型是int 返回的类型是int  
+func function_name( [parameter list] ) [return_types] {
+
 range  
 迭代数组(array)、切片(slice)、通道(channel)或集合(map)  
 ```
