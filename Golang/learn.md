@@ -44,7 +44,6 @@ fmt.Println("Hello, World!")
 **接口类型（interface）** ： error  
 空白标识符： _,  
 
-
 **指针类型（Pointer):**  用*  
 - 一个指针变量指向了一个值的内存地址。  
 var var_name *var-type  
@@ -78,8 +77,16 @@ func main() {
 	Book1.subject = "Go 语言教程"
 	Book1.book_id = 6495407
 ```
+```
+a := [...]int{1, 434, 545, 653, 43, 3, 434} //数组
+b := make([]int, 2, 3) // 切片类型，抽象列表
+c := map[string]int{"a": 1, "b": 2} //字典类型
+fmt.Println(a, b, c)
+```
 **数组:**   
 n emetType  
+var identifier []type  
+var numbers []int  
 var balance[10] int 长度为10的整数类型数组  
 var balance = [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
 balance := [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}    
@@ -207,13 +214,11 @@ func main() {
 + 函数类型  
 
 **切片类型(slice)：**  
-Go 语言切片是对数组的抽象。
-Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。
-cap() 可以测量切片最长可以达到多少  
+Go 语言切片是对数组的抽象。Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。  
+- 通过内置函数 make() 初始化切片s（创建切片），[]int 标识为其元素类型为 int 的切片。    
+cap() 可以测量切片最长可以达到多少    
 ```
-通过内置函数 make() 初始化切片s，[]int 标识为其元素类型为 int 的切片。  
-var identifier []type  
-var numbers []int  
+a := make([]int,10)等于：[0 0 0 0 0 0 0 0 0 0]
 capacity 为可选参数
 var slice1 []type = make([]type, len) // slice1 := make([]type, len)
 var numbers = make([]int, 3, 5)
@@ -244,6 +249,10 @@ func main() {
    /* 拷贝 numbers 的内容到 numbers1 */
    copy(numbers1,numbers)
    printSlice(numbers1)  
+   
+str := "hello,world！" //通过字符串字面量初始化 个字符串 str
+a : = []byte(str)  //将字符串转换为［] byte 类型切片  
+b : = []rune(str)   //将字符串转换为［] rune 类型切片    
 }
 
 func printSlice(x []int){
@@ -257,7 +266,11 @@ len=5 cap=6 slice=[0 1 2 3 4]
 len=5 cap=12 slice=[0 1 2 3 4]
 ```
 
-+ Map 类型:类似python的字典    
+**Map 类型:** 类似python的字典    
+Map是字典类型， Map 是使用 hash 表来实现的。  
+var map_variable map[key_data_type]value_data_type  
+map_variable := make(map[key_data_type]value_data_type)  
+
 ```
 package main
 
@@ -274,6 +287,66 @@ func numbers() (int, int, string) {
 	return a, b, c
 }
 ```
+```
+package main
+
+import "fmt"
+
+func main() {
+    var countryCapitalMap map[string]string /*创建集合 */
+    countryCapitalMap = make(map[string]string)
+
+    /* map插入key - value对,各个国家对应的首都 */
+    countryCapitalMap [ "France" ] = "巴黎"
+    countryCapitalMap [ "Italy" ] = "罗马"
+    countryCapitalMap [ "Japan" ] = "东京"
+    countryCapitalMap [ "India " ] = "新德里"
+
+    /*使用键输出地图值 */
+    for country := range countryCapitalMap {
+        fmt.Println(country, "首都是", countryCapitalMap [country])
+    }
+
+    /*查看元素在集合中是否存在 */
+    capital, ok := countryCapitalMap [ "American" ] /*如果确定是真实的,则存在,否则不存在 */
+    /*fmt.Println(capital) */
+    /*fmt.Println(ok) */
+    if (ok) {
+        fmt.Println("American 的首都是", capital)
+    } else {
+        fmt.Println("American 的首都不存在")
+    }
+}
+```
+delete() 函数用于删除集合的元素, 参数为 map 和其对应的 key
+```
+package main
+
+import "fmt"
+
+func main() {
+        /* 创建map */
+        countryCapitalMap := map[string]string{"France": "Paris", "Italy": "Rome", "Japan": "Tokyo", "India": "New delhi"}
+
+        fmt.Println("原始地图")
+
+        /* 打印地图 */
+        for country := range countryCapitalMap {
+                fmt.Println(country, "首都是", countryCapitalMap [ country ])
+        }
+
+        /*删除元素*/ delete(countryCapitalMap, "France")
+        fmt.Println("法国条目被删除")
+
+        fmt.Println("删除元素后地图")
+
+        /*打印地图*/
+        for country := range countryCapitalMap {
+                fmt.Println(country, "首都是", countryCapitalMap [ country ])
+        }
+}
+```
+
 ## 变量： 
 变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
 ```
@@ -427,70 +500,6 @@ func main() {
     for i, c := range "go" {
         fmt.Println(i, c)
     }
-}
-```
-Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
-Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。  
-var map_variable map[key_data_type]value_data_type  
-map_variable := make(map[key_data_type]value_data_type)  
-
-```
-package main
-
-import "fmt"
-
-func main() {
-    var countryCapitalMap map[string]string /*创建集合 */
-    countryCapitalMap = make(map[string]string)
-
-    /* map插入key - value对,各个国家对应的首都 */
-    countryCapitalMap [ "France" ] = "巴黎"
-    countryCapitalMap [ "Italy" ] = "罗马"
-    countryCapitalMap [ "Japan" ] = "东京"
-    countryCapitalMap [ "India " ] = "新德里"
-
-    /*使用键输出地图值 */
-    for country := range countryCapitalMap {
-        fmt.Println(country, "首都是", countryCapitalMap [country])
-    }
-
-    /*查看元素在集合中是否存在 */
-    capital, ok := countryCapitalMap [ "American" ] /*如果确定是真实的,则存在,否则不存在 */
-    /*fmt.Println(capital) */
-    /*fmt.Println(ok) */
-    if (ok) {
-        fmt.Println("American 的首都是", capital)
-    } else {
-        fmt.Println("American 的首都不存在")
-    }
-}
-```
-delete() 函数用于删除集合的元素, 参数为 map 和其对应的 key
-```
-package main
-
-import "fmt"
-
-func main() {
-        /* 创建map */
-        countryCapitalMap := map[string]string{"France": "Paris", "Italy": "Rome", "Japan": "Tokyo", "India": "New delhi"}
-
-        fmt.Println("原始地图")
-
-        /* 打印地图 */
-        for country := range countryCapitalMap {
-                fmt.Println(country, "首都是", countryCapitalMap [ country ])
-        }
-
-        /*删除元素*/ delete(countryCapitalMap, "France")
-        fmt.Println("法国条目被删除")
-
-        fmt.Println("删除元素后地图")
-
-        /*打印地图*/
-        for country := range countryCapitalMap {
-                fmt.Println(country, "首都是", countryCapitalMap [ country ])
-        }
 }
 ```
 ### 递归函数  
