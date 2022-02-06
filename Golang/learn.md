@@ -142,10 +142,12 @@ func main() {
 }
 ```
 
+**结构化类型(struct)：**   
+type TypeName struct 自定义结构
 ```
 type struct_variable_type struct {
-   member definition
-   member definition
+   member definition name string
+   member definition age int
    ...
    member definition
 }
@@ -180,6 +182,18 @@ type Books struct {
 	book_id int
 }
 
+// 推荐这种初始化方式，没有指定的字段则默认初始化为类型的零值
+p := &Person{ 
+Name :”tata ”, 
+Age: 12 , 
+}
+s := Student { 
+Person: p, 
+Number : 110 , 
+}
+
+不推荐： a := Person {”Tom”, 21)   
+
 func main() {
 	var Book1 Books
 	var Book2 Books
@@ -209,9 +223,7 @@ func main() {
 ```
 
 
-+ 结构化类型(struct)  
 + Channel 类型:chan  
-+ 函数类型  
 
 **切片类型(slice)：**  
 Go 语言切片是对数组的抽象。Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。  
@@ -266,12 +278,30 @@ len=5 cap=6 slice=[0 1 2 3 4]
 len=5 cap=12 slice=[0 1 2 3 4]
 ```
 
-**Map 类型:** 类似python的字典    
+**Map 类型:** 类似python的字典  
+并发安全的 map 可以使用标准包 中的 map  
 Map是字典类型， Map 是使用 hash 表来实现的。  
 var map_variable map[key_data_type]value_data_type  
 map_variable := make(map[key_data_type]value_data_type)  
 
 ```
+type User struct {
+	name string
+	age  int
+}
+
+func main() {
+	ma := make(map[int]User)
+	andes := User{
+		name: "andes",
+		age:  18,
+	}
+
+	ma[1] = andes
+	fmt.Println(ma)
+}
+// map[1:{andes 18}]
+
 package main
 
 import "fmt"
@@ -467,6 +497,48 @@ for i := 0; i < b; i++ {
 	print(i)
 }
 ```
+switch - case(fallthough)
+fallthrough: 会跳过接下来的 case 条件表达式,直接执行下一 case 语句  
+```
+score := 90
+grade := ' '
+
+switch {
+case score >= 90:
+	grade = 'A'
+case score >= 80:
+	grade = 'B'
+case score >= 70:
+	grade = 'C'
+case score >= 60:
+	grade = 'D'
+default:
+	grade = 'F'
+}
+```
+for condition { }  类似while  
+for{} 类似while(1)死循环  
+for init; condition; post { } for循环  
+```
+//访问map
+for key,value := range map{}
+for key := range map{}
+
+// 数组
+for index, value := range arry{}
+for index := range arry{}
+for _, value := range arry{}
+
+// 访问切片
+for index, value := range slice{}
+for index := range slice{}
+for _, value := range slice{}
+
+// 访问通道
+for value := range channel{}
+```
+goto 语句用于函数的内部的跳转:goto 吾句只能跳到同级作用域或者上层作用域内，不能跳到内部作用域内  
+
 
 ## 函数
 func max(num1, num2 int) int { //输入的类型是int 返回的类型是int  
