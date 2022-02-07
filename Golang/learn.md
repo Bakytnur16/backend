@@ -543,7 +543,7 @@ goto 语句用于函数的内部的跳转:goto 吾句只能跳到同级作用域
 ## 函数
 func max(num1, num2 int) int { //输入的类型是int 返回的类型是int  
 func function_name( [parameter list] ) [return_types] {
-
+切片可以作为参数传递给不定参数，切片名后要加上“． ．
 range  
 迭代数组(array)、切片(slice)、通道(channel)或集合(map)  
 ```
@@ -573,6 +573,76 @@ func main() {
         fmt.Println(i, c)
     }
 }
+
+package main
+
+import "fmt"
+
+func chvalue(a int) int {
+	a = a + 1
+	return a
+}
+func chpointer(a *int) {
+	*a += 1
+	return
+}
+func main() {
+	a := 10
+	chvalue(a)
+	fmt.Println(a)
+
+	chpointer(&a)
+	fmt.Println(a)
+}
+func main() {
+	defer func() {
+		println("first")
+	}()
+	defer func() {
+		println("second")
+
+	}()
+	print("function body")
+}// 结果
+function body 
+second 
+first
+
+defer延迟 必须跟方法，不能跟语句，使用os.Exit(int)退出进程defer不会被执行（尽量不放到循环语句里，不能用在嵌套函数里）  
+好处：避免资源泄露；
+```
+
+
+#### 函数签名：  
+函数类型又 函数签名 个函 类型就是函数定义首行去掉函数名、参数名和｛，可以
+使用台nt.Printf 的”%T”格式化参数打印函数的类型。  
+```
+package main
+
+import (
+	"fmt"
+)
+
+func add(a, b int) int {
+	return a + b
+}
+
+func main() {
+	fmt.Printf("%T\n", add)
+}
+```
+
+### 匿名函数：
+```
+var sum = func(a, b int) int {
+	return a + b
+}// 匿名函数被直接赋值函数变量
+
+func wrap(op string) func(int, int) int{
+// 匿名函数作为一个返回值
+匿名函数可以直接被调用
+匿名函数可以作为实参
+
 ```
 ### 递归函数  
 ```
@@ -614,6 +684,28 @@ func main() {
 		fmt.Printf("%d \t", fibonacci(i))
 	}
 
+}
+```
+
+### 闭包  
+闭包是函数和引用环境的实体：f := absFunc(1)  
+闭包最初的目的是减少全局变量，
+
+#### panic和recover 处理go的运行错误
+panic抛出错误，recover捕获错误
+```
+def func(){
+println("defer inner")
+recover()
+}()
+
+func expect(){
+recover()
+}
+
+func text() {
+defer expect()
+panic("test panic")
 }
 ```
 #### 数据转换
@@ -697,6 +789,7 @@ func main() {
 
 }
  ```
+ 
  ### 处理错误
  ```
  package main
