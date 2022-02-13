@@ -32,7 +32,7 @@ $z = $x + $y;
 echo $z;
 ?>
 
-<?php  
+<?php    
 function myTest()
 {
 	static $x = 0;
