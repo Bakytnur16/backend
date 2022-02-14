@@ -1,6 +1,6 @@
 # PHP 7.4
 PHP（全称：PHP：Hypertext Preprocessor，即"PHP：超文本预处理器"）是一种通用开源脚本语言。
-PHP 脚本在服务器上执行。  
+PHP 脚本在服务器上执行。    
 注释： // /* */
 
 > echo - 可以输出一个或多个字符串(echo 输出的速度比 print 快， echo 没有返回值，print有返回值1)  
