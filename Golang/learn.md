@@ -8,7 +8,7 @@ CDN的调度系统，分发系统，监控系统，短域名服务，CDN内部�
 Golang的计算能力很强
 
 src 目录：放置项目和库的源文件；  
-pkg 目录：放置编译后生成的包/库的归档文件；   
+pkg 目录：放置编译后生成的包/库的归档文件；     
 bin 目录：放置编译后生成的可执行文件。  
 token
 keyword25个: beak func go goto interface不认识的： defer（延迟执行），fallthrough，goto（跳转语句），select，go（并发语法） 
@@ -1009,3 +1009,9 @@ append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型�
 
 for i, v := range pow  
 
+删除元素：
+delete(m, key)  
+获取元素：
+elem = m[key]  
+在映射 m 中插入或修改元素：
+m[key] = elem  
