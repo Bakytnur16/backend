@@ -5,7 +5,7 @@ Blockchain technoglogy,也被称为分布式账本技术，是一-种互联网�
 后端服务器应用:  
 支撑主站后台流量(排序，推荐，搜索等)，提供负载均衡， cache, 容错，按条件分流，统计运行指标美团云计算/云服务的后台应用
 CDN的调度系统，分发系统，监控系统，短域名服务，CDN内部开放平台，运营报表系统以及其他一些小工具等。
-Golang的计算能力很强
+Golang的计算能力很强  
 
 src 目录：放置项目和库的源文件；  
 pkg 目录：放置编译后生成的包/库的归档文件；     
@@ -22,15 +22,13 @@ Token 使服务端无状态化，不会存储会话信息。
 包声明： package main表示一个可独立执行的程序，每个 Go 应用程序都包含一个名为 main 的包  
 引入包： import "fmt" 告诉 Go 编译器这个程序需要使用 fmt 包（的函数，或其他元素），fmt 包实现了格式化 IO（输入/输出）的函数  
 函数： func main() {}  
-语句 & 表达式： 
 注释： // or /*  */  
 
 Go 程序可以由多个标记组成，可以是关键字，标识符，常量，字符串，符号。如以下 GO 语句由 6 个标记组成
 fmt.Println("Hello, World!")  
-
 ## 数据类型：  
 **整型：**  int(8,16,32,64)，unit(8,16,32,64)，uintptr（无序号整型），byte  
-**字符串类型：**
+**字符串：**
 > byte // uint8 的别名  代表ASCII  
 > rune // int32 的别名 代表一个 Unicode 码   
 字符串跨行写用``
@@ -87,17 +85,20 @@ fmt.Println(a, b, c)
 n emetType  
 var identifier []type  
 var numbers []int  
-var balance[10] int 长度为10的整数类型数组  
+var balance[10]int 长度为10的整数类型数组  
 var balance = [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
 balance := [5]float32{1000.0, 2.0, 3.4, 7.0, 50.0}    
 长度不确定，可以用。。。代替  
 var balance = [...]float32{1000.0, 2.0, 3.4, 7.0, 50.0}  
 var salary float32 = balance[9] 数组元素  
+for i, v := range pow  
+
+var s []int = primes[1:4]
+
+内置函数：
+func append(s []T, vs ...T) []T  
+append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型为 T 的值将会追加到该切片的末尾。 
 ```
-package main
-
-import "fmt"
-
 func main() {
    var n [10]int /* n 是一个长度为 10 的数组 */
    var i,j int
@@ -112,11 +113,6 @@ func main() {
       fmt.Printf("Element[%d] = %d\n", j, n[j] )
    }
 }
-
-
-package main
-
-import "fmt"
 
 func main() {
 	var i, j, k int
@@ -141,89 +137,6 @@ func main() {
 	fmt.Printf("%.2f\n", math.Pi) // 用 Printf 函数打印浮点数时可以使用“%f”来控制保留几位小数
 }
 ```
-
-**结构化类型(struct)：**   
-type TypeName struct 自定义结构
-```
-type struct_variable_type struct {
-   member definition name string
-   member definition age int
-   ...
-   member definition
-}
-
-type Books struct {
-	title   string
-	author  string
-	subject string
-	book_id int
-}
-
-func main() {
-	fmt.Println(Books{"Go 语言", "www.runoob.com", "Go 语言教程", 6495407})
-
-	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com", subject: "Go 语言教程", book_id: 6495407})
-
-	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com"})
-}
-
-variable_name := structure_variable_type {value1, value2...valuen}
-或
-variable_name := structure_variable_type { key1: value1, key2: value2..., keyn: valuen}
-
-package main
-
-import "fmt"
-
-type Books struct {
-	title   string
-	author  string
-	subject string
-	book_id int
-}
-
-// 推荐这种初始化方式，没有指定的字段则默认初始化为类型的零值
-p := &Person{ 
-Name :”tata ”, 
-Age: 12 , 
-}
-s := Student { 
-Person: p, 
-Number : 110 , 
-}
-
-不推荐： a := Person {”Tom”, 21)   
-
-func main() {
-	var Book1 Books
-	var Book2 Books
-
-	Book1.title = "GO 语言"
-	Book1.author = "www.runoob.com"
-	Book1.subject = "Go 语言教程"
-	Book1.book_id = 6495407
-
-	Book2.title = "Python 教程"
-	Book2.author = "www.runoob.com"
-	Book2.subject = "Go 语言教程"
-	Book2.book_id = 6495700
-
-	fmt.Printf("Book 1 title : %s\n", Book1.title)
-	fmt.Printf("Book 1 author : %s\n", Book1.author)
-	fmt.Printf("Book 1 subject : %s\n", Book1.subject)
-	fmt.Printf("Book 1 book_id : %d\n", Book1.book_id)
-
-	/* 打印 Book2 信息 */
-	fmt.Printf("Book 2 title : %s\n", Book2.title)
-	fmt.Printf("Book 2 author : %s\n", Book2.author)
-	fmt.Printf("Book 2 subject : %s\n", Book2.subject)
-	fmt.Printf("Book 2 book_id : %d\n", Book2.book_id)
-}
-
-```
-
-
-+ Channel 类型:chan  
 
 **切片类型(slice)：**  
 Go 语言切片是对数组的抽象。Go 数组的长度不可改变，在特定场景中这样的集合就不太适用，Go 中提供了一种灵活，功能强悍的内置类型切片("动态数组")，与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大。  
@@ -283,7 +196,12 @@ len=5 cap=12 slice=[0 1 2 3 4]
 Map是字典类型， Map 是使用 hash 表来实现的。  
 var map_variable map[key_data_type]value_data_type  
 map_variable := make(map[key_data_type]value_data_type)  
-
+删除元素：
+delete(m, key)  
+获取元素：
+elem = m[key]  
+在映射 m 中插入或修改元素：
+m[key] = elem  
 ```
 type User struct {
 	name string
@@ -376,6 +294,90 @@ func main() {
         }
 }
 ```
+
+**结构化类型(struct)：**   
+type TypeName struct 自定义结构
+```
+type struct_variable_type struct {
+   member definition name string
+   member definition age int
+   ...
+   member definition
+}
+
+type Books struct {
+	title   string
+	author  string
+	subject string
+	book_id int
+}
+
+func main() {
+	fmt.Println(Books{"Go 语言", "www.runoob.com", "Go 语言教程", 6495407})
+
+	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com", subject: "Go 语言教程", book_id: 6495407})
+
+	fmt.Println(Books{title: "Go 语言", author: "www.runoob.com"})
+}
+
+variable_name := structure_variable_type {value1, value2...valuen}
+或
+variable_name := structure_variable_type { key1: value1, key2: value2..., keyn: valuen}
+
+package main
+
+import "fmt"
+
+type Books struct {
+	title   string
+	author  string
+	subject string
+	book_id int
+}
+
+// 推荐这种初始化方式，没有指定的字段则默认初始化为类型的零值
+p := &Person{ 
+Name :”tata ”, 
+Age: 12 , 
+}
+s := Student { 
+Person: p, 
+Number : 110 , 
+}
+
+不推荐： a := Person {”Tom”, 21)   
+
+func main() {
+	var Book1 Books
+	var Book2 Books
+
+	Book1.title = "GO 语言"
+	Book1.author = "www.runoob.com"
+	Book1.subject = "Go 语言教程"
+	Book1.book_id = 6495407
+
+	Book2.title = "Python 教程"
+	Book2.author = "www.runoob.com"
+	Book2.subject = "Go 语言教程"
+	Book2.book_id = 6495700
+
+	fmt.Printf("Book 1 title : %s\n", Book1.title)
+	fmt.Printf("Book 1 author : %s\n", Book1.author)
+	fmt.Printf("Book 1 subject : %s\n", Book1.subject)
+	fmt.Printf("Book 1 book_id : %d\n", Book1.book_id)
+
+	/* 打印 Book2 信息 */
+	fmt.Printf("Book 2 title : %s\n", Book2.title)
+	fmt.Printf("Book 2 author : %s\n", Book2.author)
+	fmt.Printf("Book 2 subject : %s\n", Book2.subject)
+	fmt.Printf("Book 2 book_id : %d\n", Book2.book_id)
+}
+
+```
+
+
++ Channel 类型:chan  
+
 
 ## 变量： 
 变量的命名规则遵循骆驼命名法，即首个单词小写，每个新单词的首字母大写，例如：numShips   
@@ -998,20 +1000,15 @@ defer 推迟
 var p *int （*T 是指向 T 类型值的指针）
 & 操作符会生成一个指向其操作数的指针。  
 * 操作符表示指针指向的底层值。
+ 
 
-var s []int = primes[1:4]
 
-切片 s 的长度和容量可通过表达式 len(s) 和 cap(s) 来获取。
 
-内置函数：
-func append(s []T, vs ...T) []T  
-append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型为 T 的值将会追加到该切片的末尾。  
+interface{} 空接口
 
-for i, v := range pow  
+Go 程（goroutine）是由 Go 运行时管理的轻量级线程。  
 
-删除元素：
-delete(m, key)  
-获取元素：
-elem = m[key]  
-在映射 m 中插入或修改元素：
-m[key] = elem  
+二叉查找树  
+
+laravel
+
