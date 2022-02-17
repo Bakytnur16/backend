@@ -1,4 +1,4 @@
-Golang的应用方向:
+Golang的应用方向:  
 区块链技术:简称BT    
 Blockchain technoglogy,也被称为分布式账本技术，是一-种互联网数据库技术，其特点是去中心化，公开透明，让每个人均可参与数据库记录。  
 
@@ -52,7 +52,7 @@ var fp *float32    /* 指向浮点型 */
 var ptr *int(* 指针变量)
 ptr =  &a 将给出变量的实际地址。  获取地址  
 访问结构体用 '.'  
-- nil 指针也称为空指针。
+- nil 指针也称为空指针。  
 nil在概念上和其它语言的null、None、nil、NULL一样，都指代零值或空值。
 - 一个指针变量通常缩写为 ptr。
 if(ptr == nil) 
