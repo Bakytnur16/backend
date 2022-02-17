@@ -917,3 +917,95 @@ strings	字符串转换、解析及实用函数
 time	时间接口
 text	文本模板及 Token 词法器
 ```
+
+```
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	// 创建一个井字板（经典游戏）
+	board := [][]string{
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+	}
+
+	// 两个玩家轮流打上 X 和 O
+	board[0][0] = "X"
+	board[2][2] = "O"
+	board[1][2] = "X"
+	board[1][0] = "O"
+	board[0][2] = "X"
+
+	for i := 0; i < len(board); i++ {
+		fmt.Printf("%s\n", strings.Join(board[i], " "))
+	}
+}
+
+```
+
+在 Go 中，如果一个名字以大写字母开头，那么它就是已导出的。例如，Pizza 就是个已导出名，Pi 也同样，它导出自 math 包。
+```
+func add(x,y int) int{}
+
+swap 函数返回了两个字符串
+
+func split(sum int) (x, y int) {
+	x = sum * 4 / 9
+	y = sum - x
+	return // 要返回的东西被写在了函数里，所以不用写太多直接返回就行
+}
+
+func main() {
+	fmt.Println(split(17))
+}
+
+func main() {
+	sum := 1
+	for ; sum < 1000; {
+		sum += sum
+	}
+	fmt.Println(sum)
+}
+
+func main() {
+	sum := 1
+	for sum < 1000 {
+		sum += sum
+	}
+	fmt.Println(sum)
+}2
+4
+8
+16
+32
+64
+128
+256
+512
+1024
+1024
+```
+if-else语句无需小括号，直接大括号{}写
+该语句声明的变量作用域仅在 if 之内
+
+defer 推迟
+
+var p *int （*T 是指向 T 类型值的指针）
+& 操作符会生成一个指向其操作数的指针。  
+* 操作符表示指针指向的底层值。
+
+var s []int = primes[1:4]
+
+切片 s 的长度和容量可通过表达式 len(s) 和 cap(s) 来获取。
+
+内置函数：
+func append(s []T, vs ...T) []T  
+append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型为 T 的值将会追加到该切片的末尾。  
+
+for i, v := range pow  
+
