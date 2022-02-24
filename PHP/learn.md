@@ -190,6 +190,19 @@ case "green":
 default:
     echo "你喜欢的颜色不是 红, 蓝, 或绿色!";
 }
+
+$favor = "red";
+switch($favor){
+    case "red"://只要写条件
+        echo "zhelizenmecuol";
+        break; // 别忘记break不然它会全打印一遍
+    case "blue":
+        echo "haoba";
+        break;
+    default:
+        echo "hapde";
+        break;
+}
 ?>
 ```
 
