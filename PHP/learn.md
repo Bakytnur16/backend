@@ -198,6 +198,13 @@ bool define ( string $name , mixed $value [, bool $case_insensitive = false ] )
 name：必选参数，常量名称，即标志符。  
 value：必选参数，常量的值。  
 case_insensitive ：可选参数，如果设置为 TRUE，该常量则大小写不敏感。默认是大小写敏感的。  
+常量：  
+__LINE__
+```
+<?php
+echo '这是第 " '  . __LINE__ . ' " 行'; //这是第 “ 2 ” 行
+?>
+```
 
 
 ++ x	预递增	x 加 1，然后返回 x  
@@ -285,4 +292,17 @@ for($x=0;$x<$arrlength;$x++)
     while - 只要指定的条件成立，则循环执行代码块  
     do...while - 首先执行一次代码块，然后在指定的条件成立时重复这个循环  
     for - 循环执行代码块指定的次数  
-    foreach - 根据数组中每个元素来循环代码块  
+    foreach - 根据数组中每个元素来循环代码块（用来遍历数组）  
+```
+$x=array("Google","Runoob","Taobao");
+foreach ($x as $value)
+{
+    echo $value . PHP_EOL;
+}
+
+$x=array(1=>"Google", 2=>"Runoob", 3=>"Taobao");
+foreach ($x as $key => $value)
+{
+    echo "key  为 " . $key . "，对应的 value 为 ". $value . PHP_EOL;
+}
+```
