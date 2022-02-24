@@ -198,12 +198,40 @@ bool define ( string $name , mixed $value [, bool $case_insensitive = false ] )
 name：必选参数，常量名称，即标志符。  
 value：必选参数，常量的值。  
 case_insensitive ：可选参数，如果设置为 TRUE，该常量则大小写不敏感。默认是大小写敏感的。  
-常量：  
-__LINE__
+
+**常量:** 
 ```
+__LINE__: 文件中的当前行号。  
+
 <?php
 echo '这是第 " '  . __LINE__ . ' " 行'; //这是第 “ 2 ” 行
 ?>
+
+__FILE__: 文件的完整路径和文件名。如果用在被包含文件中，则返回被包含的文件名。  
+
+
+<?php
+echo '该文件位于 " '  . __FILE__ . ' " ';
+?>
+
+__DIR__:文件所在的目录。
+
+
+<?php
+echo '该文件位于 " '  . __DIR__ . ' " ';
+?>
+
+__FUNCTION__:函数名称（PHP 4.3.0 新加）
+
+function test() {
+    echo  '函数名为：' . __FUNCTION__ ;
+}
+test();
+
+__CLASS__:类的名称  
+__METHOD__:类的方法名  
+__NAMESPACE__:当前命名空间的名称（区分大小写）
+
 ```
 
 
@@ -306,3 +334,7 @@ foreach ($x as $key => $value)
     echo "key  为 " . $key . "，对应的 value 为 ". $value . PHP_EOL;
 }
 ```
+
+#### 命名空间 
+namespace MyProject;  
+为了区别同样的函数或者类或者常量，通过命名空间区分。
