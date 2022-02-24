@@ -46,6 +46,12 @@ myTest();
 myTest();
 // 输出 0 1 2
 ?>
+
+参数作用域
+function myTest($x){
+    echo $x;
+}
+myTest(5);
 ```
 
 
@@ -53,9 +59,24 @@ myTest();
 是一种在命令行shell（如sh、csh、ksh、bash、PowerShell和zsh）和程序语言（像Perl、PHP、Python和Ruby）里定义一个字符串的方法。
 1. 必须后接分号
 2. 结束标识必须顶格独自占一行(即必须从行首开始，前后不能衔接任何空白和字符)
+```
+echo <<<EOF
+        <h1>我的第一个标题</h1>
+        <p>我的第一个段落。</p>
+EOF;
 
-## 数据类型 
-1. String（字符串） 
+$name="runoob";
+$a= <<<EOF
+        "abc"$name
+        "123"
+EOF;
+// 结束需要独立一行且前后不能空格
+echo $a;
+多行输入符
+```
+## 数据类型   
+ PHP var_dump() 函数返回变量的数据类型和值  
+1. **String（字符串）** 
 并置运算符 (.) 用于把两个字符串值连接起来。
 ```
 $txt1="hello world";
@@ -66,17 +87,23 @@ hello world what a nice day
 echo strlen("hello world!");
 echo strpos("hello world!","world");
 ```
-strlen() 字符串长度  
-strpos() 函数用于在字符串内查找一个字符或一段指定的文本,返回第一个匹配的字符位置  
+**strlen() 字符串长度  
+strpos() 函数用于在字符串内查找一个字符或一段指定的文本,返回第一个匹配的字符位置**  
    
-2. Integer（整型）
-3. Float（浮点型）可以有指数
+2. **Integer（整型）**
+整型可以用三种格式来指定：十进制， 十六进制（ 以 0x 为前缀）或八进制（前缀为 0）  
+
+3. **Float（浮点型）** 可以有指数
 4. Boolean（布尔型）
-5. Array（数组
+5. **Array（数组）**
 ```$cars=array("Volvo","BMW","Toyota");
 echo "I like " . $cars[0] . ", " . $cars[1] . " and " . $cars[2] . ".";
 $cars[0]="Volvo";  
 echo count($cars);
+
+$z = array("voloe","boolm","toyota");
+echo $z[0];
+?>
 ```
 count() 函数用于返回数组的长度
 
