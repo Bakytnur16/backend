@@ -53,7 +53,27 @@ function myTest($x){
 }
 myTest(5);
 ```
+##超级变量：
+```
 
+    $GLOBALS
+    $_SERVER: $_SERVER 是一个包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组。这个数组中的项目由 Web 服务器创建。  
+    $_REQUEST: PHP $_REQUEST 用于收集HTML表单提交的数据。  
+```
+<?php 
+$name = $_REQUEST['fname']; 
+echo $name; 
+?>
+```
+    $_POST: PHP $_POST 被广泛应用于收集表单数据   
+    $_GET
+    $_FILES
+    $_ENV
+    $_COOKIE
+    $_SESSION
+
+
+```
 
 ### EOF(heredoc)
 是一种在命令行shell（如sh、csh、ksh、bash、PowerShell和zsh）和程序语言（像Perl、PHP、Python和Ruby）里定义一个字符串的方法。
@@ -74,7 +94,7 @@ EOF;
 echo $a;
 多行输入符
 ```
-## 数据类型   
+# 数据类型   
  PHP var_dump() 函数返回变量的数据类型和值  
 1. **String（字符串）** 
 并置运算符 (.) 用于把两个字符串值连接起来。
@@ -104,10 +124,49 @@ echo count($cars);
 $z = array("voloe","boolm","toyota");
 echo $z[0];
 ?>
+
+$cars=array("Volvo","BMW","Toyota");
+
+
+for($x=0;$x<count($cars);$x++){
+    echo $cars[$x];
+    echo "<br>";
+}
 ```
 count() 函数用于返回数组的长度
+```
+$cars=array("Volvo","BMW","Toyota");
+echo count($cars);
+// 长度是3
+$cars[0]="Volvo";
+$cars[1]="BMW";
+$cars[2]="Toyota"; 
+```
+### 数组排列：
+```
+    sort() - 对数组进行升序排列
+    rsort() - 对数组进行降序排列
+    asort() - 根据关联数组的值，对数组进行升序排列
+    ksort() - 根据关联数组的键，对数组进行升序排列
+    arsort() - 根据关联数组的值，对数组进行降序排列
+    krsort() - 根据关联数组的键，对数组进行降序排列
+```
 
+### 关联数组（像字典）  
+```$age['Peter']="35";
+$age['Ben']="37";
+$age['Joe']="43"; ```
 
+ ```
+ $age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+ 
+ $age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+foreach($age as $x => $y){
+    echo "key=" .$x.", value=" . $y;
+}
+ 
+ ```
+ 
 
 6. Object（对象）
 7. NULL（空值）
@@ -218,3 +277,12 @@ for($x=0;$x<$arrlength;$x++)
 }
 ?>
 ```
+
+
+## 循环
+
+
+    while - 只要指定的条件成立，则循环执行代码块  
+    do...while - 首先执行一次代码块，然后在指定的条件成立时重复这个循环  
+    for - 循环执行代码块指定的次数  
+    foreach - 根据数组中每个元素来循环代码块  
