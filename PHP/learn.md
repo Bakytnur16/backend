@@ -338,3 +338,69 @@ foreach ($x as $key => $value)
 #### 命名空间 
 namespace MyProject;  
 为了区别同样的函数或者类或者常量，通过命名空间区分。
+
+
+## 继承  
+```
+class Child extends Parent {
+   // 代码部分
+}
+```
+如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。
+
+
+## 访问权限
+
+    public（公有）：公有的类成员可以在任何地方被访问。  
+    protected（受保护）：受保护的类成员则可以被其自身以及其子类和父类访问。  
+    private（私有）：私有的类成员则只能被其定义所在的类访问。  
+    
+```
+// 声明一个公有的构造函数
+    public function __construct() { }
+
+    // 声明一个公有的方法
+    public function MyPublic() { }`
+```
+
+## 接口：  
+```
+// 声明一个'iTemplate'接口
+interface iTemplate
+{
+    public function setVariable($name, $var);
+    public function getHtml($template);
+}
+
+
+// 实现接口
+class Template implements iTemplate
+```
+
+## 表单  
+```
+<?php
+$q = isset($_GET['q'])? htmlspecialchars($_GET['q']) : '';
+if($q){
+    if($q == 'RUNOOB'){
+        echo '菜鸟';
+
+    }else if($q=='GOOGLE'){
+        echo "google";
+
+    }else if ($q=="TAOBAO"){
+        echo "taobao";
+    }
+}else{}
+
+?>
+<form acction='' method="get">
+    <select name="q">
+        <option value="">选择一个站点：</option>
+        <option value="RUNOOB">RUNOOB</option> //VALUE一定要对
+        <option value="GOOGLE">GOOGLE</option>
+        <option value="TAOBAO">TAOABO</option>
+    </select>
+    <input type="submit" value="submit">
+</form>
+```
