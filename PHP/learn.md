@@ -603,3 +603,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 ```
 
+### 时间
+```echo date("Y-m-d");```
+```<?php include 'header.php'; ?>
+fopen() 函数用于在 PHP 中打开文件。	
+	
+<?php
+session_start();
+ 
+if(isset($_SESSION['views']))
+{
+    $_SESSION['views']=$_SESSION['views']+1;
+}
+else
+{
+    $_SESSION['views']=1;
+}
+echo "浏览量：". $_SESSION['views'];
+?>
+	
+mail(to,subject,message,headers,parameters) 
+```
+	
+# 异常和错误
+Try - 使用异常的函数应该位于 "try" 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。
+Throw - 里规定如何触发异常。每一个 "throw" 必须对应至少一个 "catch"。
+Catch - "catch" 代码块会捕获异常，并创建一个包含异常信息的对象
