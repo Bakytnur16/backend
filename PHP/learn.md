@@ -629,3 +629,20 @@ mail(to,subject,message,headers,parameters)
 Try - 使用异常的函数应该位于 "try" 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。
 Throw - 里规定如何触发异常。每一个 "throw" 必须对应至少一个 "catch"。
 Catch - "catch" 代码块会捕获异常，并创建一个包含异常信息的对象
+
+PHP 过滤器用于验证和过滤来自非安全来源的数据。
+```	
+<?php
+$servername = "localhost";
+$username = "";
+$password = "";
+ 
+// 创建连接
+$conn = new mysqli($servername, $username, $password);
+ 
+// 检测连接
+if ($conn->connect_error) {
+    die("连接失败: " . $conn->connect_error);
+} 
+echo "连接成功";
+?>```
