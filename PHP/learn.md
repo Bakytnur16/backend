@@ -1,4 +1,7 @@
+php课程：https://edu.aliyun.com/course/509?utm_content=m_1000015030
 https://zhuanlan.zhihu.com/p/24035779
+
+server服务器和client客户端
 
 # PHP 7.4
 PHP（全称：PHP：Hypertext Preprocessor，即"PHP：超文本预处理器"）是一种通用开源脚本语言。
@@ -648,3 +651,9 @@ if ($conn->connect_error) {
 } 
 echo "连接成功";
 ?>```
+
+	
+# 文件：
+引用文件有两个方法：
+include（"文件名"）;和
+require "文件名";
