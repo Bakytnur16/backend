@@ -16,7 +16,26 @@ PHP 脚本在服务器上执行。
 以 $ 符号开始，区分大小写  
 变量有：local，global（函数外部的变量），static（静止不被删除），parameter（函数参数作用域）  
 $GLOBALS[index] 全局数组  
+printf("a weekend have %d days",7);  
+%d ：整数，显示为有符号十进制数  
+%f ：浮点数，显示为浮点数
+%s ： 字符串，显示为字符串
+gettype: echo gettype ( $sum );  
+settype: echo settype ( $sum, "float" );  
+双引号可以解析变量和转义字符
  ```
+Gettype() 获取变量的类型	基本数据类型中的其中一种
+Settype() 设置变量的类型	Bool(1:true 0:false(or ’’))
+Isset()	用来判断一个变量是否存在	Bool
+Unset()	释放给定的变量	Void
+Empty()	检测一个变量的值是否为空	Bool
+is_int() is_integer()	检测变量是否是整数	Bool
+Is_string()	检测变量是否是字符串	bool
+Is_numeric	检测变量是否为数字或数字字符串	bool
+Is_null	检测变量是否为 NULL	bool
+Intval()	获取变量的整数值	int
+ 
+ 
  <?php
 $x = 5;
 $y = 6;
@@ -30,6 +49,13 @@ myTest();
 echo $y;
 ?>
  
+
+<?php
+$sum = 100;
+$total = ( string ) $sum;
+echo gettype ( $sum );//string
+?>
+
 <?php
 $x = 5;
 $y = 6;
@@ -58,24 +84,27 @@ function myTest($x){
 }
 myTest(5);
 ```
-##超级变量：
+## 超级变量：
 ```
 
     $GLOBALS
     $_SERVER: $_SERVER 是一个包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组。这个数组中的项目由 Web 服务器创建。  
     $_REQUEST: PHP $_REQUEST 用于收集HTML表单提交的数据。  
-```
+
 <?php 
 $name = $_REQUEST['fname']; 
 echo $name; 
 ?>
-```
-    $_POST: PHP $_POST 被广泛应用于收集表单数据   
-    $_GET
-    $_FILES
-    $_ENV
-    $_COOKIE
-    $_SESSION
+
+$GLOBALS	所有全局变量数组
+$_SERVER	服务器环境变量数组
+$_GET	通过GET方式传递给该脚本的变量数组
+$_POST	通过POST方式传递给该脚本的变量数组
+$_COOKIE	COOKIE变量数组
+$_FILES	与文件上传相关的变量数组
+$_ENV	环境变量数组
+$_REQUEST	所用用户输入的变量数组
+$_SESSION	会话变量数组
 
 
 ```
@@ -111,24 +140,58 @@ hello world what a nice day
 
 echo strlen("hello world!");
 echo strpos("hello world!","world");
+chop()函数移除字符串后面多余的空白，包括新行。  
+ltrim()函数移除字符串起始处多余空白。  
+rtrim()函数移除字符串后面多余的空白，包括新行，此函数是chop()的别名。  
+trim()函数移除字符串两边多余的空白。  
+nl2br()函数将字符串作为输入参数    
+strtoupper()函数将字符串转换为大写   
+strtolower()函数将字符串转换成小写  
+ucfirst()函数将第一个字母转换为大写  
+ucwords()函数将每个单词第一个字母转换为大写  
+函数substr()允许我们访问一个字符串给定起点和终点的子字符串。
+strtok()函数一次只从字符串取出一些片段（称为令牌）。对于一次从字符串中取出一个  
+<?php echo substr("abcdef", 1, 3); ?>  
+str_split()返回一个数组，其中各数组元素分别是字符串参数中的一个字符串。
+<?php print_r(str_split('This is a Teacher!')); ?>
+substr_count()返回一个字符串在另一个字符串中出现的次数。  
+可以使用函数strlen()来检查字符串的长度  
+替换字符串：str_replace()、str_ireplace()、substr_replace()  
+
 ```
 **strlen() 字符串长度  
 strpos() 函数用于在字符串内查找一个字符或一段指定的文本,返回第一个匹配的字符位置**  
-   
+ 
+ ### 正则表达式
+ preg_grep()函数搜索数组中的所有元素、preg_match()preg_match()函数在字符串中搜索模式、preg_match_all()函数在字符串中匹配模式的所有出现、preg_quote()在每个对于正则表达式语法而言有特殊含义的字符前插入一个反斜线、preg_replace()函数搜索到所有匹配，然后替换成想要的字符串返回出来。、preg_replace_callback()和 preg_split()用来分割不同的元素。  
+
+
+ 
 2. **Integer（整型）**
 整型可以用三种格式来指定：十进制， 十六进制（ 以 0x 为前缀）或八进制（前缀为 0）  
+Rand()函数是libc中定义的一个随机函数的简单包装器。$a = rand(0,10);  
+Mt_rand()函数是一个很好的代替实现. $b = mt_rand(0,10);  
+Abs()	取绝对值  
+Floor()	舍去法取整  
+Ceil()	进一法取整  
+Round()	四舍五入  
+Min()	求最小值或数组中最小值  
+Max()	求最大值或数组中最大值  
+
 
 3. **Float（浮点型）** 可以有指数
+double
 4. Boolean（布尔型）
 5. **Array（数组）**
+可以用短数组语法 [] 替代 array() 。
+
 ```$cars=array("Volvo","BMW","Toyota");
 echo "I like " . $cars[0] . ", " . $cars[1] . " and " . $cars[2] . ".";
-$cars[0]="Volvo";  
-echo count($cars);
+$cars[0]="Volvo";    
+echo count($cars);  
 
 $z = array("voloe","boolm","toyota");
-echo $z[0];
-?>
+echo $z[0];  
 
 $cars=array("Volvo","BMW","Toyota");
 
@@ -137,9 +200,9 @@ for($x=0;$x<count($cars);$x++){
     echo $cars[$x];
     echo "<br>";
 }
-```
+
 count() 函数用于返回数组的长度
-```
+
 $cars=array("Volvo","BMW","Toyota");
 echo count($cars);
 // 长度是3
@@ -160,9 +223,9 @@ $cars[2]="Toyota";
 ### 关联数组（像字典）  
 ```$age['Peter']="35";
 $age['Ben']="37";
-$age['Joe']="43"; ```
+$age['Joe']="43"; 
 
- ```
+
  $age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
  
  $age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
@@ -252,8 +315,14 @@ x xor y 异或  如果 x 和 y 有且仅有一个为 true，则返回 true
 x && y 与 如果 x 和 y 都为 true，则返回 true  
 x || y  或  如果 x 和 y 至少有一个为 true，则返回 true  
 
-三元运算符  
+## 三元运算符  
 (expr1) ? (expr2) : (expr3) 
+条件表达式?表达式1:表达式2。
+<?php
+$a = 100;
+echo $a > 60 ? 'success':'fail';
+?>
+success
 
 
 if...elseif....else
@@ -317,13 +386,14 @@ for($x=0;$x<$arrlength;$x++)
 }
 ?>
 ```
+# 函数  
 
 
 ## 循环
 
 
     while - 只要指定的条件成立，则循环执行代码块  
-    do...while - 首先执行一次代码块，然后在指定的条件成立时重复这个循环  
+    do...while - 循环先执行一次再去判断条件，也就是说不管满不满足条件，都会先执行一次，执行次数最少1次 
     for - 循环执行代码块指定的次数  
     foreach - 根据数组中每个元素来循环代码块（用来遍历数组）  
 ```
@@ -338,6 +408,13 @@ foreach ($x as $key => $value)
 {
     echo "key  为 " . $key . "，对应的 value 为 ". $value . PHP_EOL;
 }
+
+<?php
+$num = range(0,11);
+foreach( $num as $i){
+    echo $i . '.';
+}
+?>
 ```
 
 #### 命名空间 
@@ -384,6 +461,9 @@ class Template implements iTemplate
 
 ## 表单  
 ```
+标头(header) 是服务器以HTTP 协议传HTML 资料到浏览器前所送出的字符串，在
+标头与HTML 文件之间尚需空一行分隔。
+
 <?php
 $q = isset($_GET['q'])? htmlspecialchars($_GET['q']) : '';
 if($q){
@@ -399,7 +479,7 @@ if($q){
 }else{}
 
 ?>
-<form acction='' method="get">
+<form action='' method="get">
     <select name="q">
         <option value="">选择一个站点：</option>
         <option value="RUNOOB">RUNOOB</option> //VALUE一定要对
@@ -609,7 +689,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ```
 
 ### 时间
+戳（Unix Timestamp）。Unix 时间戳(Unix timestamp)，或称Unix 时间(Unix time)、POSIX 时间(POSIX time)  
 ```echo date("Y-m-d");```
+checkdate()函数能够很好地验证日期，提供的日期如果有效，则返回true  
+date()函数返回根据预定义指令格式化时间和日期的字符串形式  
+gettimeofday()函数返回与当前时间有关的元素所组成的一个关联数组   
+getdate()函数接受一个时间戳，并返回一个由其各部分组成的关联数组。  
+time()函数可以获取当前的时间戳，并且可以通过设置时间戳的值。   
+mktime()函数可以生成给定日期时间的时间戳。  
+strtotime()将人可读的日期转换为Unix 时间戳。  
+getlastmod()可以得到当前文件最后修改时间的时间戳   
+putenv()函数可以设置当前的默认时区。  
+date_default_timezone_set()可以设置当前的默认时区。  
+localtime()函数可以取得本地时间数据，然后返回一个数组。  
+
 ```<?php include 'header.php'; ?>
 fopen() 函数用于在 PHP 中打开文件。	
 	
@@ -628,6 +721,8 @@ echo "浏览量：". $_SESSION['views'];
 ?>
 	
 mail(to,subject,message,headers,parameters) 
+
+
 ```
 	
 # 异常和错误
@@ -653,7 +748,46 @@ echo "连接成功";
 ?>```
 
 	
-# 文件：
+#文件：
 引用文件有两个方法：
 include（"文件名"）;和
 require "文件名";
+Include后面如果还有其他代码，当调用include出错时，后面的代码还会继续执行，但是require则不会。
+Include在调用一个不存在的文件时，会给出警告，但是会继续执行后面的代码。
+
+basename — 返回路径中的文件名部分  
+dirname — 返回路径中的目录部分  
+pathinfo — 返回文件路径的信息  
+realpath — 返回规范化的绝对路径名  
+filesize — 取得文件大小  
+disk_free_space — 返回目录中的可用空间  
+disk_total_space — 返回一个目录的磁盘总大小  
+fileatime — 取得文件的上次访问时间  
+filectime — 取得文件的 inode 修改时间  
+filemtime — 取得文件修改时间  
+fopen — 打开文件或者 URL  
+fclose — 关闭一个已打开的文件指针  
+fwrite — 写入文件（可安全用于二进制文件） 
+file_exists — 检查文件或目录是否存在  
+feof — 测试文件指针是否到了文件结束的位置  
+r 只读 r+ 读写指针在开头 w写 w+ 读写指针在末尾
+```
+<?php
+$fp = fopen('file1.txt','w');
+$outStr = "my name is anllin,\r\nmy age is 29.";
+fwrite($fp,$outStr,strlen($outStr));
+fclose($fp);
+?>
+```
+规范：
+namespace Vendor\Model;  
+类的常量中所有字母都必须大写，词间以下划线分隔。   
+类的属性命名可以遵循 大写开头的驼峰式，小写开头的驼峰式，下划线分隔式   
+方法名称必须符合 camelCase() 式的小写开头驼峰命名规范。  
+
+所有PHP文件必须使用Unix LF (linefeed)作为行的结束符。  
+所有PHP文件必须以一个空白行作为结束。  
+纯PHP代码文件必须省略最后的 ?> 结束标签。  
+每行不应该多于80个字符  
+代码必须使用4个空格符的缩进，一定不能用 tab键 。  
+不要使用下划线作为前缀，来区分属性是 protected 或 private。  
