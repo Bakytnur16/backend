@@ -82,7 +82,7 @@ index函数里：return view('task',['id'=>10]);
     }
 Route::get('task/url',[TaskController::class, 'url'])
     ->name('task.index');//控制器的名称+方法 //第三个函数false取消域名
-    ```
+```
 #### 分组
 ```
 Route::prefix('api')->get('task',[TaskController::class,'index']);
@@ -97,4 +97,22 @@ Route::prefix('api')->group(function(){
     Route::get('task',[TaskController::class, 'index']);
 });
 
+```
+#### 中间件
+
+#### 子域名 domain
+```
+Route::domain('127.0.0.1')->group(function(){
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
+```
+#### 命名空间
+- 比如在conrtoller创建一个admin文件夹，再加一个controller
+```
+Route::namespace('Admin')->group(function(){
+//只能访问控制器里的，或者不在控制器里的
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
 ```
