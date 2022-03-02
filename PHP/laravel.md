@@ -23,7 +23,7 @@ Route::match(['get','post'],'index',function() //必须有三个参数
 });
 
 ```
-###控制器：接受http请求
+## 控制器：接受http请求
 - MVC里的C
 - 创建控制器： php artisan make:controller TaskController
 ```
@@ -31,7 +31,29 @@ Route::get('/task',[TaskController::class, 'index']);//参数二：控制器@方
 Route::get('/task/read/{id}',[TaskController::class, 'read']); //参数设置
 Route::get('task','App\Http\Controllers\TaskController@index');
 
+//正则表达限制动态参数
 
+Route::get('/task/read/{id}',[TaskController::class, 'read'])
+    ->where('id',[0-9]+'); 
+
+Route::get('/task/read/{id}',[TaskController::class, 'read'])
+    ->where(['id'=>[0-9]+','name'=>'[a-z]+']); 
+    
+//正则全局路径设定：Providers/routeserviceprovider.php里
+
+boot(){
+    Route::pattern('id','[0-9]+');
+    pattern::boot();
+    }
+    
+//在某个路由解除全局正则：
+
+Route::get('/task/read/{id}',[TaskController::class, 'read'])->where('id','.*');
+```
+#### 路由跳转
+- http协议
+```
+Route::redirect('index','task',301);//跳转，302临时跳转,301永久跳转
 ```
 
 
