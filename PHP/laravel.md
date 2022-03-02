@@ -59,11 +59,42 @@ Route::permanentRedirect('index','task');//直接设置301
 
 ## 视图路由:view
 - MVC中的view
-- 视图路径（三个参数）：url，名称，参数
+- 视图路径（三个参数）：url，名称[view文件名称]，参数
 - 文件在在resource/views/xxx.blade.php 形式创建
 
 - html快速创建： 输入'html:5 +TAB键'
 
 ```
+Route::get('/task',[TaskController::class, 'index'])
 Route::view('task','task',['id'=>10]);
+或者
+控制器里输出view
+index函数里：return view('task',['id'=>10]);
+```
+
+## 路由命名
+- 给路由命名可以生成url地址或进行重定向
+- URL是URI的子集
+```
+    public function url(){
+        $url = route('task.index');
+        return $url;
+    }
+Route::get('task/url',[TaskController::class, 'url'])
+    ->name('task.index');//控制器的名称+方法 //第三个函数false取消域名
+    ```
+#### 分组
+```
+Route::prefix('api')->get('task',[TaskController::class,'index']);
+
+Route::group(['prefix'=>'api'],function(){
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
+//推荐
+Route::prefix('api')->group(function(){
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
+
 ```
