@@ -161,4 +161,19 @@ Route::get('one',OneController::class);
 ```
 字符串-字符串输出；数组-json格式
 return response()->json([1,2,3]);
+
+跳转首页
+return redirect()->to('/');
+return redirect('task');
+return redirect()->route('task.index');
+return back(); 返回上一页
+return redirect()->away('http://www.baidu.com');
 ```
+
+###资源型控制器
+- 平常的增删改查
+- php artisan make:controller UserController --resource
+> 会生成7个方法
+
+![7个方法](![image](https://user-images.githubusercontent.com/64322636/156431840-6d808fc9-4c43-45a2-af1f-a5feea347a44.png))
+
