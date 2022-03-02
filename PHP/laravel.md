@@ -174,6 +174,6 @@ return redirect()->away('http://www.baidu.com');
 - 平常的增删改查
 - php artisan make:controller UserController --resource
 > 会生成7个方法
+![serven-method](https://user-images.githubusercontent.com/64322636/156432163-a31bf0cf-fb3c-49a6-9e58-e79fe38e8875.png)
 
-![7个方法](![image](https://user-images.githubusercontent.com/64322636/156431840-6d808fc9-4c43-45a2-af1f-a5feea347a44.png))
 
