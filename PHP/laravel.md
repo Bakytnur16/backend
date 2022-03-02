@@ -154,3 +154,11 @@ Route::get('one',OneController::class);
     }
     
 ```
+## 响应设置
+- JSON格式
+- 处理完业务会返回一个发送到浏览器的响应，return
+- responce（）可以做更多的相应设置和状态码
+```
+字符串-字符串输出；数组-json格式
+return response()->json([1,2,3]);
+```
