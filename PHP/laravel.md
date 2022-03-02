@@ -136,7 +136,10 @@ Route::fallback(function(){
 //    return redirect(to:'/');
     return view('404');
 });
-
+//获取路由信息
+Route::get('task',function(){
+    dump(Route::current());
+});
 ```
 ## 单行控制器：__invoke() 固定的方法
 php artisan make:controller OneController --invokable //声明
