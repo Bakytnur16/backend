@@ -170,10 +170,52 @@ return back(); 返回上一页
 return redirect()->away('http://www.baidu.com');
 ```
 
-###资源型控制器
+### 资源型控制器
+#### 单个批量资源路由
 - 平常的增删改查
+```
+Route::resource('blogs',BlogControler::cass)
+```
 - php artisan make:controller UserController --resource
 > 会生成7个方法
 ![serven-method](https://user-images.githubusercontent.com/64322636/156432163-a31bf0cf-fb3c-49a6-9e58-e79fe38e8875.png)
 
+#### 批量资源路由
+```
+Route::resource([
+    'blogs'=> 'BlogController'
+    ]);
+    
+public function edit($id){
+    return route('blogs.edit',['blog'=>10]);edit默认情况下是blog,所以写id不会被识别。
+    
+Route::resource('blogs',BlogController::class)
+    ->only('index','show');//只生成这两个
+    
+Route::except('blogs',BlogController::class)
+    ->except('index','show');//除这两个之外
 
+# api资源路由
+Route::apiResources([
+    'blogs' => 'BlogController'
+]);
+Route:apiresource('blog',BlogController);
+```
+php artisan route:list目前路由注册的列表
+php artisan make:controller CommentController --api
+
+```
+http://127.0.0.1:8000/blogs/10/comments/20/edit
+
+public function edit($blog_id, $comment_id)
+{
+    return '编辑博文下的评论，博文id： '.$blog_id.'评论id： '.$comment_id;
+}
+
+//资源路由嵌套
+Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class);
+
+一般情况下id是独立的，所以不需要父id和子id同时存在；
+为了优化资源现套，通过->shallow()实现浅层套现方法
+Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)->shadow();
+```
