@@ -116,3 +116,38 @@ Route::namespace('Admin')->group(function(){
     Route::get('task',[TaskController::class, 'index']);
 });
 ```
+#### name
+```
+可以嵌套
+
+Route::name('admin.')->group(function() {
+    Route::get('task/url', [TaskController::class, 'url'])->name('task.index');
+    Route::name('abc.')->group(){
+        Route::get('task',[TaskController::class, 'index']);
+});
+```
+
+### 回退路由
+- 使用回退，让不存在的路由自动跳转到你指定的页面去
+- 必须把回退路由放到所有路由的底部
+```
+在view里创建404.blade.php 文件：做美观一点就行了
+Route::fallback(function(){
+//    return redirect(to:'/');
+    return view('404');
+});
+
+```
+## 单行控制器：__invoke() 固定的方法
+php artisan make:controller OneController --invokable //声明
+- 只是语义但行为，没限制不能用其他方法
+- 路径里不用定义方法，直接访问，只处理一个功能
+```
+use App\Http\Controllers\OneController;
+Route::get('one',OneController::class);
+    public function __invoke()
+    {
+        return 'break';
+    }
+    
+```
