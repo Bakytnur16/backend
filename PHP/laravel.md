@@ -2,6 +2,7 @@ laravel
 
 ## 路由：接收HTTP请求的路径
 - web.app
+
 ```
 Route::get('/', function () {
     return 'hello world';
@@ -21,8 +22,16 @@ Route::match(['get','post'],'index',function() //必须有三个参数
   return 'hello world';
 });
 
-Route::get('/task',[TaskController::class, 'index']);
+```
+###控制器：接受http请求
+- MVC里的C
+- 创建控制器： php artisan make:controller TaskController
+```
+Route::get('/task',[TaskController::class, 'index']);//参数二：控制器@方法名
 Route::get('/task/read/{id}',[TaskController::class, 'read']); //参数设置
+Route::get('task','App\Http\Controllers\TaskController@index');
+
+
 ```
 
 
