@@ -314,3 +314,65 @@ return DB::table('admin')->where('id',10)->get();
 return [DB::table('admin')->where('id',10)->exists()]; 不存在返回false，存在返回true
 return [DB::table('admin')->where('id',10)->exists()]; //正好相反，没有就回true
 ```
+
+#### select(query)
+```
+$user  = DB::table('admin')->select('name as account')->get();
+[{"account":"s"},{"account":"b"},{"account":"b"},{"account":"n"}]
+[{"name":"s"},{"name":"b"},{"name":"b"},{"name":"n"}]选择addSelect
+//附加
+$base = $user->addSelect('gender')->get();
+$users = DB::table('admin')->select(DB::raw('COUNT(*) AS id'))->get();
+return $users;
+//查询男的和女的
+$users = DB::table('admin')
+    ->groupBy('gander')
+    ->select(DB::raw('COUNT(*) AS count, gender'))->get(); //raw实现内部原生
+return $users;
+
+$users = DB::table('admin')
+    ->groupBy('gander')
+    ->havingRaw('count>4')
+    ->selectRaw('COUNT(*) AS count, gender')->get();
+return $users;
+//havingRaw 分组之后再进行筛选
+```
+
+#### where
+- 条件查询
+```
+$users = DB::table('admin')->where('id','>=',19)->get(); //等于就不用写operator
+$users = DB::table('admin')->where('name','like','%xiao%')->get();
+//条件多就用数组
+$users = DB::table('admin')->where([
+    'gender' => '男',
+    'status' => 1
+    ])->get();
+    
+$users = DB::table('admin')->where([
+    ['gender'，'>=', 90],
+    ['price','=','男‘]
+    ])->get();
+orWhere()实现两个或以上的or条件查询 或者
+$users = DB::table('admin')->where('price','>=',95）
+                           ->orwhere(function($query){
+                                $query->where('gender','女')->where('username','like',%xiao%})
+                                ->toSql();
+
+//whereBetween: orWhereBetween/ whereNotBetween/ orWhereNotBetween
+$users = DB::table('admin')->whereBetween('price',[60, 90])->toSql();
+
+//whereIn ： orWhereIn/ whereNotIn/ orWhereNotIn
+$user  = DB::table('admin')->whereIn('id',[20,30,50,90])->get(); //在这个数据集里的
+
+//whereNull()查询null记录
+$user  = DB::table('admin')->whereNull('uid')->get();
+
+//whereDate()
+$user  = DB::table('admin')->whereDate('create_time','>','2018-12-11')->get();
+```
+
+#### 排序分组
+- whereColumn() 实现两个字段相等的查询结果
+- orderBy() 实现desc或者asc排序
+- latest() 时间倒序
