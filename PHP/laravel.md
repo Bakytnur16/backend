@@ -376,3 +376,4 @@ $user  = DB::table('admin')->whereDate('create_time','>','2018-12-11')->get();
 - whereColumn() 实现两个字段相等的查询结果
 - orderBy() 实现desc或者asc排序
 - latest() 时间倒序
+- inRandomOrder()随机排序
