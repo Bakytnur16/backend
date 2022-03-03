@@ -254,4 +254,11 @@ Route::post('task/getform',function(){
 - ELOQUENT  ORM 关系型对象映射器来操作数据库；
 - 数据库配置在config/database.php
 - 本地配置在.env
-- 
+```
+DB_CONNECTION=pgsql
+DB_HOST=[localhost]
+DB_PORT=
+DB_DATABASE=demodb
+DB_USERNAME=postgres
+DB_PASSWORD=
+```
