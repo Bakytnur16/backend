@@ -248,4 +248,10 @@ Route::post('task/getform',function(){
 ```
 419:为了避免跨站请求伪造攻击，框架提供了CSRF令牌保护，请求验证
 ```<input typw="hidden" name="_token" value="{{csrf_token()}}">;```
+- 快捷方法：@csrf 
 
+#### 数据库配置
+- ELOQUENT  ORM 关系型对象映射器来操作数据库；
+- 数据库配置在config/database.php
+- 本地配置在.env
+- 
