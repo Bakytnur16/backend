@@ -261,4 +261,56 @@ DB_PORT=
 DB_DATABASE=demodb
 DB_USERNAME=postgres
 DB_PASSWORD=
+
+DataController:
+use Illuminate\Support\Facades\DB;
+$user = DB::table('admin')->find(id:1);
+return Response()->json($user);
+
+```
+数据库有专有DB，可以查询和构造器查询
+
+### model
+php artisan make:model Http/Models/User
+- 模型编码要求数据库是复数s[es,ies]
+- return Str::plural('user')返回字符串复数
+
+#### could not driver
+window配置：
+php.ini：
+extension=php_pdo_pgsql.dll  
+extension=php_pgsql.dll  
+重启apache：d:/apache/apache24/bin:httpd –k restart
+
+### 构造器查询
+#### 查询
+-table()引入相应的表
+- first()获取第一个数据
+- 获取第一个数据的email字段
+- find(id)通过id指定一条数据
+- plunck(字段名'email','username')获取所有数据单列值得集合；
+```
+$users = DB::table('admin')->get();
+$users = DB::table('admin')->first();
+$users = DB::table('admin')->value('email');
+$users = DB::table('admin')->find(20);
+$users = DB::table('admin')->pluck('username','id');//id作为username的key
+return $users;
+```
+#### 分块处理
+```
+DB::table('admin')->orderBy('id')->chunk(3, function($users){ //前三条
+    foreach($users as $user){
+        echo $user->name;}
+    echo '---<br>';
+});
+```
+#### 聚合查询
+- 聚合函数返回结果，必须放到最后，像orderby和where应该放到句中
+```
+return DB::table('admin')->count(); //有多少个
+return DB::table('admin')->avg('price');//价格的平均值
+return DB::table('admin')->where('id',10)->get();
+return [DB::table('admin')->where('id',10)->exists()]; 不存在返回false，存在返回true
+return [DB::table('admin')->where('id',10)->exists()]; //正好相反，没有就回true
 ```
