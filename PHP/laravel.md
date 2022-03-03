@@ -219,3 +219,33 @@ Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)
 为了优化资源现套，通过->shallow()实现浅层套现方法
 Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)->shadow();
 ```
+```
+表单请求：
+public function form(){
+    return view('form');
+}
+    
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          contesnt="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提交</title>
+</head>
+<body>
+<form action="/task/getform" method="post">
+    <input typw="hidden" name="_token" value="{{csrf_token()}}">;
+    <button type="ssubmit">提交</button>
+</form>
+</body>
+</html>
+
+Route::get('/task/form',[TaskController::class,'form']);
+Route::post('task/getform',function(){
+    return 123;});
+```
+419:为了避免跨站请求伪造攻击，框架提供了CSRF令牌保护，请求验证
+```<input typw="hidden" name="_token" value="{{csrf_token()}}">;```
+
