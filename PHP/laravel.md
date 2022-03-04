@@ -250,6 +250,9 @@ Route::post('task/getform',function(){
 ```<input typw="hidden" name="_token" value="{{csrf_token()}}">;```
 - 快捷方法：@csrf 
 
+#### 数据库迁移
+php artisan make:migration create_hd_table --create=hd
+php artisan migrate
 #### 数据库配置
 - ELOQUENT  ORM 关系型对象映射器来操作数据库；
 - 数据库配置在config/database.php
