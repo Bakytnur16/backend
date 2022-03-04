@@ -1,8 +1,17 @@
-laravel
+laravel  
+- composer是php的appstore
+- composer require barryvdh/laravel-ide-helper  
+> php artisan ide-helper:generate 为Facades生成注释
+> php artisan ide-helper:models 为数据模型生成注释
+> php artisan ide-helper:meta 生成phpstorm meta file
+- composer global require laravel/installer - laravel new blog
+- 先读取.env在执行config配置命令，所以要在env里先设置  
+- artisan生成，必须在项目目录下执行
+bixuan/ 和bixuan是两个url
 
 ## 路由：接收HTTP请求的路径
 - web.app
-
+- api.app
 ```
 Route::get('/', function () {
     return 'hello world';
@@ -23,10 +32,45 @@ Route::match(['get','post'],'index',function() //必须有三个参数
 });
 
 ```
-## 控制器：接受http请求
+### 路由跳转
+- http协议
+```
+Route::redirect('index','task',301);//跳转，302临时跳转,301永久跳转
+Route::permanentRedirect('index','task');//直接设置301
+```
+
+### 路由命名
+- 给路由命名可以生成url地址或进行重定向
+- URL是URI的子集
+```
+    public function url(){
+        $url = route('task.index');
+        return $url;
+    }
+Route::get('task/url',[TaskController::class, 'url'])
+    ->name('task.index');//控制器的名称+方法 //第三个函数false取消域名
+```
+### 回退路由
+- 使用回退，让不存在的路由自动跳转到你指定的页面去
+- 必须把回退路由放到所有路由的底部
+```
+在view里创建404.blade.php 文件：做美观一点就行了
+Route::fallback(function(){
+//    return redirect(to:'/');
+    return view('404');
+});
+//获取路由信息
+Route::get('task',function(){
+    dump(Route::current());
+});
+```
+
+# 控制器：接受http请求
 - MVC里的C
+- 用大头方法命名
 - 创建控制器： php artisan make:controller TaskController
 ```
+namespace App\Http\Controllers;
 Route::get('/task',[TaskController::class, 'index']);//参数二：控制器@方法名
 Route::get('/task/read/{id}',[TaskController::class, 'read']); //参数设置
 Route::get('task','App\Http\Controllers\TaskController@index');
@@ -50,14 +94,21 @@ boot(){
 
 Route::get('/task/read/{id}',[TaskController::class, 'read'])->where('id','.*');
 ```
-#### 路由跳转
-- http协议
+## 单行控制器：__invoke() 固定的方法
+php artisan make:controller OneController --invokable //声明
+- 只是语义但行为，没限制不能用其他方法
+- 路径里不用定义方法，直接访问，只处理一个功能
 ```
-Route::redirect('index','task',301);//跳转，302临时跳转,301永久跳转
-Route::permanentRedirect('index','task');//直接设置301
+use App\Http\Controllers\OneController;
+Route::get('one',OneController::class);
+    public function __invoke()
+    {
+        return 'break';
+    }
+    
 ```
 
-## 视图路由:view
+# 视图路由:view
 - MVC中的view
 - 视图路径（三个参数）：url，名称[view文件名称]，参数
 - 文件在在resource/views/xxx.blade.php 形式创建
@@ -70,19 +121,27 @@ Route::view('task','task',['id'=>10]);
 或者
 控制器里输出view
 index函数里：return view('task',['id'=>10]);
+
+Route::get('index',function(){
+    $time = strtotime(now());
+    return View('index',compact('time'));
+});
+
+<a>{{date('Y-m-d',$time)}}</a>
+
+use Illuminate\Support\Facades\DB;
+
+public function select(){
+    $lists =  DB::table('users')
+        ->where('id','2')
+        ->get();
+    return View('index',compact('lists'));
+}
+
+Route::get('select',[TaskController::class,'select']);
 ```
 
-## 路由命名
-- 给路由命名可以生成url地址或进行重定向
-- URL是URI的子集
-```
-    public function url(){
-        $url = route('task.index');
-        return $url;
-    }
-Route::get('task/url',[TaskController::class, 'url'])
-    ->name('task.index');//控制器的名称+方法 //第三个函数false取消域名
-```
+
 #### 分组
 ```
 Route::prefix('api')->get('task',[TaskController::class,'index']);
@@ -127,33 +186,6 @@ Route::name('admin.')->group(function() {
 });
 ```
 
-### 回退路由
-- 使用回退，让不存在的路由自动跳转到你指定的页面去
-- 必须把回退路由放到所有路由的底部
-```
-在view里创建404.blade.php 文件：做美观一点就行了
-Route::fallback(function(){
-//    return redirect(to:'/');
-    return view('404');
-});
-//获取路由信息
-Route::get('task',function(){
-    dump(Route::current());
-});
-```
-## 单行控制器：__invoke() 固定的方法
-php artisan make:controller OneController --invokable //声明
-- 只是语义但行为，没限制不能用其他方法
-- 路径里不用定义方法，直接访问，只处理一个功能
-```
-use App\Http\Controllers\OneController;
-Route::get('one',OneController::class);
-    public function __invoke()
-    {
-        return 'break';
-    }
-    
-```
 ## 响应设置
 - JSON格式
 - 处理完业务会返回一个发送到浏览器的响应，return
@@ -273,10 +305,6 @@ return Response()->json($user);
 ```
 数据库有专有DB，可以查询和构造器查询
 
-### model
-php artisan make:model Http/Models/User
-- 模型编码要求数据库是复数s[es,ies]
-- return Str::plural('user')返回字符串复数
 
 #### could not driver
 window配置：
@@ -398,6 +426,66 @@ $users = DB::table('users')->join('books',function($join){
 
 $query = DB::table('books')->selectRaw('user_id,title');
 $users = DB::table('users')->joinSub($query,'books',function($join){
-
 })->tosql();
+$users = DB::table('users')
+    ->select('username','email')
+    ->distinct() //取消重复
+    ->get();
+//支持orOn 连缀
 ```
+
+### 构造器的增删改
+```
+//insertOrIgnore 新增不报错,屏蔽
+//insertGetId 新增获取id
+$query = DB::table('users')->insert([
+    [//批量新增
+    'username'=> '李白',
+    'password' => '123456',
+    'email' => 'shuak@gmail.com']);
+    ],[
+    'username'=> '李白',
+    'password' => '123456',
+    'email' => 'shuak@gmail.com'
+    ]
+]);
+
+//update 
+DB:table('users')-> where('id',311)
+    ->update([
+        'username' => '李红',
+        'email' => 'ligong@gmail.com']);
+        
+//有数据就更改数据，没有就添加
+DB::table('users')->updateOrInsert(
+    ['id'=>301],
+    [
+    'username' => '里黑',
+    'passwrd' => '654321',
+    'email' => '3134@gmail.com',
+    'details' => '321',]
+);
+
+DB::table('users')->where('id',19)
+    ->update()[
+        'list->uid' => 1010
+    ];
+// 自增increment(),自减decrement()
+
+删除一条数据
+DB::table('users')->where('id',307)->delete();
+
+清空
+DB::table('users')->delete();
+DB::table('users')->truncate();
+```
+
+## 模型
+### model
+php artisan make:model Http/Models/User
+- 模型编码要求数据库是复数s[es,ies]
+- return Str::plural('user')返回字符串复数
+- protected $keyType = 'string';
+- 模式下可以更改数据库
+
+虚拟主机
