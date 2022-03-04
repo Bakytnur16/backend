@@ -380,3 +380,24 @@ $user  = DB::table('admin')->whereDate('create_time','>','2018-12-11')->get();
 - orderBy() 实现desc或者asc排序
 - latest() 时间倒序
 - inRandomOrder()随机排序
+
+
+#### join
+```
+$users = DB::table('users')
+    ->join('book', 'books.user_id','user.id')
+    ->tosql();
+$users = DB::table('users')
+    ->select('username','email')
+    ->crossJoin('books')
+    ->get();
+    
+$users = DB::table('users')->join('books',function($join){
+    $join->on('books.user_id','=','users')->where('users.id',19);
+})->sql();
+
+$query = DB::table('books')->selectRaw('user_id,title');
+$users = DB::table('users')->joinSub($query,'books',function($join){
+
+})->tosql();
+```
