@@ -1,6 +1,7 @@
 laravel  
 - composer是php的appstore
 - composer require barryvdh/laravel-ide-helper  
+- 
 > php artisan ide-helper:generate 为Facades生成注释
 > php artisan ide-helper:models 为数据模型生成注释
 > php artisan ide-helper:meta 生成phpstorm meta file
@@ -282,7 +283,10 @@ Route::post('task/getform',function(){
 ```<input typw="hidden" name="_token" value="{{csrf_token()}}">;```
 - 快捷方法：@csrf 
 
+
 #### 数据库迁移
+- 数据库配置要记得备份
+- 
 php artisan make:migration create_hd_table --create=hd
 php artisan migrate
 #### 数据库配置
@@ -480,7 +484,7 @@ DB::table('users')->delete();
 DB::table('users')->truncate();
 ```
 
-## 模型
+# 模型
 ### model
 php artisan make:model Http/Models/User
 - 模型编码要求数据库是复数s[es,ies]
