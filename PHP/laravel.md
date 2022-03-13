@@ -2,7 +2,7 @@ laravel
 - composer是php的appstore
 - composer require barryvdh/laravel-ide-helper  
 - 
-> php artisan ide-helper:generate 为Facades生成注释
+> php artisan ide-helper:generate 为Facades生成注释  
 > php artisan ide-helper:models 为数据模型生成注释
 > php artisan ide-helper:meta 生成phpstorm meta file
 - composer global require laravel/installer - laravel new blog
