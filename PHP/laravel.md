@@ -10,7 +10,7 @@ laravel
 - artisan生成，必须在项目目录下执行。
 bixuan/ 和bixuan是两个url    
 
-## 路由：接收HTTP请求的路径
+##   路由：接收HTTP请求的 路径
 - web.app
 - api.app
 ```
