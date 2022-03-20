@@ -204,3 +204,21 @@ $team ->save();
 - Member.model在不指定table属性的情况下，会默认去找members表
 - 在主键字段不是id的情况下，模型里定义主键属性$PrimaryKey
 - 如果数据表里不需要$timestamps属性,在model里设置flase
+- request 语法：
+```
+$request->all()
+$request->input('name');
+$request->only(['name1','name2']);
+$request->except(['name1','name2'...])
+$request->has('name')
+$request->get('name')
+
+$user = new User();
+$user -> create($request -> all());
+ or
+return User::create($request -> all());
+
+return User::find(4);
+
+//all不支持其他查询方法，get可以在前面添加select之类的方法
+```
