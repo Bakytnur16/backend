@@ -1,3 +1,5 @@
+增删改查+循环+判断  
+php artisan serve 修改了配置文件需要重启  
 注意： LTS(长期支持）
 
 ### 路由规则：route提供给控制器
@@ -22,7 +24,8 @@ Route::match(['get','post'],'/',function(){
 
 
 ## Facades:
-- 接受用书输入的类：Illuminate\Support\Dacades\Input
+- 新版本启弃用了input接口
+- 接受用户输入的类：Illuminate\Support\Dacades\Input
 - Facades：门面的思想，门面介于一个类的实例化和没有实例化中间的状态。
 ```
 可以获取get和post
@@ -32,3 +35,90 @@ Input::only([]) 获取指定
 Input::expect([]) 取反
 Input::has('name') 判断某个输入是否存在
 ```
+## 数据库操作：
+```
+create table member(
+  id int primary key auto increment,
+  name varchar(32) not null,)
+  
+ SB_HOST:locahost -> 不写本地域名是因为写域名默认远程登陆
+ 
+ DB:: -> 在app.php里定义了别名DB,不用写太长的空间方法
+```
+
+## 增加
+- insert():添加一条或多条，返回布尔类型
+- insertGetId():添加一条，返回自增的id
+```
+public function add(){
+    $db = DB::table('users');
+    //定义变量，可以多次反复使用
+    $result = $db -> insert([
+        [
+            'name' => '马冬梅',
+            'email' => 'madongmei@gmial.com',
+            'password' => 'qwerty',
+        ],
+        [
+            'name' => '马春',
+            'email' => 'machun@gmial.com',
+            'password' => 'qwerty',
+        ],
+    ]);
+    dd($result);
+
+    $result = $db -> insertGetId([
+            'name' => '马秋梅',
+            'email' => 'macqiumei@gmial.com',
+            'password' => 'qwerty',
+    ]);
+    dd($result);
+}
+```
+
+## 修改
+- where（字段，运算符，值)
+```
+public function update(){
+    $db = DB::table('users');
+
+    $result = $db -> where('id',14) -> update([
+        'name' => '张三丰',
+    ]);
+    dd($result);//返回收到影响的行数
+}
+
+increment 和 decrement
+DB::table('users') -> increament('votes') 每次加1
+DB::table('users') -> increament('votes',5) 每次加5
+DB::table('users') -> decreament('votes') 每次减1
+DB::table('users') -> decreament('votes',5)每次减5
+```
+## 查询
+```
+public function select(){
+    $db = DB::table('users');
+    $data = $db -> where('id','>',3) -> get();
+
+    foreach ($data as $key => $value){
+        echo "id是：{$value -> id},名字是: {$value -> name}.<br/>";
+    }//get查询的结果每一行记录的是对象,value是对象不是数组，所以获取遍历数组用的是箭头
+}
+
+//->where()->where() 并且关系语法
+//->where()->orWhere() 或者关系
+
+输出users表里所有的用户名
+public function select(){
+    $db = DB::table('users');
+    $data = $db -> get();
+    foreach ($data as $datas){
+        echo"{$datas -> name}<br/>";}
+    }
+//返回特定用户的某个字段值
+$data = $db -> where('id',1)->value('email');
+return $data;
+//返回特定用户的多个字段值
+```
+
+## 删除
