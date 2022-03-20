@@ -1,6 +1,8 @@
 增删改查+循环+判断  
 php artisan serve 修改了配置文件需要重启  
 注意： LTS(长期支持）
+#composer create-project laravel/laravel=5.4.* edu --prefer-dist ./
+--prefer-dist 优先下载压缩包
 
 ### 路由规则：route提供给控制器
 - 请求方式（‘请求路由’，匿名函数或控制器响应)
@@ -221,4 +223,14 @@ return User::create($request -> all());
 return User::find(4);
 
 //all不支持其他查询方法，get可以在前面添加select之类的方法
+get([列1,列2])
+select(列1，列2)->get()
+all([列1，列2])
+
+$result = Member::where('id','7') -> update([
+      'age' => '82']);
 ```
+
+### 自动验证
+- 后端也需要设置认证，黑客可以绕过前端验证，直接黑进服务器
+- 
