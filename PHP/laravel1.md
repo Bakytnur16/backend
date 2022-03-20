@@ -35,7 +35,12 @@ Input::only([]) 获取指定
 Input::expect([]) 取反
 Input::has('name') 判断某个输入是否存在
 ```
+
 ## 数据库操作：
+- 执行任意的 insert,update,delete 语句(形象记录的语句使用statement语法)
+> DB::statement("insert into member values(null,'')");
+- 执行任意的select语句(不影响记录的语句使用select语句)
+> DB::select("select * from member");
 ```
 create table member(
   id int primary key auto increment,
@@ -46,7 +51,7 @@ create table member(
  DB:: -> 在app.php里定义了别名DB,不用写太长的空间方法
 ```
 
-## 增加
+### 增加
 - insert():添加一条或多条，返回布尔类型
 - insertGetId():添加一条，返回自增的id
 ```
@@ -76,7 +81,7 @@ public function add(){
 }
 ```
 
-## 修改
+### 修改
 - where（字段，运算符，值)
 ```
 public function update(){
@@ -94,7 +99,7 @@ DB::table('users') -> increament('votes',5) 每次加5
 DB::table('users') -> decreament('votes') 每次减1
 DB::table('users') -> decreament('votes',5)每次减5
 ```
-## 查询
+### 查询
 ```
 public function select(){
     $db = DB::table('users');
@@ -119,6 +124,35 @@ public function select(){
 $data = $db -> where('id',1)->value('email');
 return $data;
 //返回特定用户的多个字段值
+
+//排序
+$db = DB::table('users')
+    ->orderBy('id', 'desc')//倒序
+    ->get();
+return $db;
+
+//分页
+$db = DB::table('users')
+    ->limit(2)
+    ->offset(1)
+    ->get();
+return $db;
 ```
 
-## 删除
+
+### 删除
+- 修改代替删除
+- 物理删除（本质就是删除），逻辑删除（本质是修改）
+- 逻辑删除本质是不把信息显示给用户
+
+```
+$db = DB::table("users");
+$result = $db -> where('id','1')->delete();
+```
+
+## 视图
+- blade.php文件后缀
+- 视图文件分目录，用.表示：return view('home.index');
+- 视图文件优先运行blade.php，没有的情况下运行php，两种格式的文件都支持
+- 
+
