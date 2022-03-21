@@ -233,4 +233,22 @@ $result = Member::where('id','7') -> update([
 
 ### 自动验证
 - 后端也需要设置认证，黑客可以绕过前端验证，直接黑进服务器
-- 
+```
+public function store(Request $request){
+  $this -> validate(数据对象,[验证规则]);
+  $this- 就是当前类
+requred - 不为空
+max:225 最长255个字符
+min:1最少字符
+email:验证邮箱合法
+confirmed 验证两个字段是否相同
+password_confirmation
+integer:判断整型
+ip:验证字段是否是ip地址
+numeric:验证字段是数值
+max:value验证字段必须小于等于最大值
+string: 是否是字符串
+unique:字段唯一
+| 并列
+
+```
