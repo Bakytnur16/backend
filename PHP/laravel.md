@@ -1,14 +1,13 @@
 laravel  
 - composer是php的appstore
 - composer require barryvdh/laravel-ide-helper  
-- 
 > php artisan ide-helper:generate 为Facades生成注释  
 > php artisan ide-helper:models 为数据模型生成注释
 > php artisan ide-helper:meta 生成phpstorm meta file
 - composer global require laravel/installer - laravel new blog
 - 先读取.env在执行config配置命令，所以要在env里先设置  
 - artisan生成，必须在项目目录下执行。
-bixuan/ 和bixuan是两个url    
+bixuan/ 和bixuan是两个url       
 
 ##   路由：接收HTTP请求的 路径
 - web.app
