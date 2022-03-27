@@ -1,15 +1,21 @@
-laravel  
-- composer是php的appstore
+laravel:增删改查+循环+判断  
+- 注意： LTS(长期支持）
+- composer是php的appstore: 
+> composer global require laravel/installer - laravel new blog   
+> composer create-project laravel/laravel=5.4.* edu --prefer-dist ./--prefer-dist 优先下载压缩包 
 - composer require barryvdh/laravel-ide-helper  
 > php artisan ide-helper:generate 为Facades生成注释  
 > php artisan ide-helper:models 为数据模型生成注释
 > php artisan ide-helper:meta 生成phpstorm meta file
-- composer global require laravel/installer - laravel new blog
-- 先读取.env在执行config配置命令，所以要在env里先设置  
+- 先读取.env在执行config配置命令，所以要在env里先设置
+- php artisan serve 修改了配置文件需要重启    
 - artisan生成，必须在项目目录下执行。
 bixuan/ 和bixuan是两个url       
 
-##   路由：接收HTTP请求的 路径
+## 路由：接收HTTP请求的路径/route提供给控制器
+- 请求方式（‘请求路由’，匿名函数或控制器响应)
+- 必选参数{参数}，可选参数{参数?}
+- match(匹配)指定多个路由,any(任何）：
 - web.app
 - api.app
 ```
