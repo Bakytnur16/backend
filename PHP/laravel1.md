@@ -1,13 +1,7 @@
-增删改查+循环+判断  
-php artisan serve 修改了配置文件需要重启  
-注意： LTS(长期支持）
-#composer create-project laravel/laravel=5.4.* edu --prefer-dist ./
---prefer-dist 优先下载压缩包
-
 ### 路由规则：route提供给控制器
 - 请求方式（‘请求路由’，匿名函数或控制器响应)
 - 必选参数{参数}，可选参数{参数?}
-- match(匹配)指定多个路由,any(任何）：
+- match(匹配)指定多个路由,any(任何)
 ```
 Route::get('/',function(){
   return view('welcome');});
