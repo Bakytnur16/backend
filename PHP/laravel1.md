@@ -10,42 +10,6 @@ Input::only([]) 获取指定
 Input::expect([]) 取反
 Input::has('name') 判断某个输入是否存在
 ```
-
-## 视图
-- blade.php文件后缀
-- 视图文件分目录，用.表示：return view('home.index');
-- 视图文件优先运行blade.php，没有的情况下运行php，两种格式的文件都支持
-- view(模板文件，数组) 或者 view(模板文件)->with(数组)
-- smarty模板引擎存在"|",用于在视图中解释变量（使用函数去处理变量）
-- 视图引入css文件：
->     <link rel="stylesheet" type="text/css" href="/css/app.css">
->     <link rel="stylesheet" type="text/css" href="{{asset('css')}}/app.css">
-```
-public function index(){
-    $date = date('Y-m-d H:i:s',time());
-    $day = 'Sunday';
-    return view('test.welcome',['date'=>$date,'day'=> $day]);
-或者：
-    return view('test.welcome',compact('date','day')); //php内置函数compact(变量1，变量2）
-}
-
-<h1>现在是{{$date}},今天是{{$day}}</h1>
-
-//get查询到的结果集中每一条记录其实是一个对象，因此在循环具体字段的时候需要注意使用对象调用属性的方式才可以获取数据   
-id&emsp;&emsp;name&emsp;&emsp;email&emsp;&emsp;password<br/>
-@foreach($db as $data){
-    {{$data -> id}}&emsp;&emsp;{{$data -> name}}&emsp;&emsp;{{$data -> email}}<br/>
-}
-@endforeach
-
-@if($data < 10)
-less 10
-@elseif($date == 10)
-equl to 10
-@else
-more than 10
-@endif
-```
 #### CSRF 跨站请求伪造
 - laravel自动为每一个用户session生成一个CSRF Token,Token可用于验证登录用户和发送请求是否是同一个人
 - @csrf（以前可以使用：csrf_field() ->代表整个的input隐藏域）
