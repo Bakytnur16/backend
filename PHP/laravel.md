@@ -12,20 +12,24 @@ laravel:增删改查+循环+判断
 - artisan生成，必须在项目目录下执行。
 bixuan/ 和bixuan是两个url       
 
-## 路由：接收HTTP请求的路径/route提供给控制器
+## 路由：接收HTTP请求的路径/ route提供给控制器  
 - 请求方式（‘请求路由’，匿名函数或控制器响应)
 - 必选参数{参数}，可选参数{参数?}
 - match(匹配)指定多个路由,any(任何）：
-- web.app
-- api.app
 ```
+Route::get('/',function(){
+  return view('welcome');});
+  
+Route::match(['get','post'],'/',function(){
+  return 'hello world';})->name('名字'); //起名
+
 Route::get('/', function () {
     return 'hello world';
 });
 
 Route::get('index/{id}',function($id){ //参数，动态变量
     return 'hello world'.$id;
-});
+})
 
 Route::get()
 Route::post()
@@ -38,13 +42,6 @@ Route::match(['get','post'],'index',function() //必须有三个参数
 });
 
 ```
-### 路由跳转
-- http协议
-```
-Route::redirect('index','task',301);//跳转，302临时跳转,301永久跳转
-Route::permanentRedirect('index','task');//直接设置301
-```
-
 ### 路由命名
 - 给路由命名可以生成url地址或进行重定向
 - URL是URI的子集
@@ -56,6 +53,29 @@ Route::permanentRedirect('index','task');//直接设置301
 Route::get('task/url',[TaskController::class, 'url'])
     ->name('task.index');//控制器的名称+方法 //第三个函数false取消域名
 ```
+
+#### 分组
+```
+Route::prefix('api')->get('task',[TaskController::class,'index']);
+
+Route::group(['prefix'=>'api'],function(){
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
+//推荐
+Route::prefix('api')->group(function(){
+    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
+    Route::get('task',[TaskController::class, 'index']);
+});
+```
+
+### 路由跳转
+- http协议
+```
+Route::redirect('index','task',301);//跳转，302临时跳转,301永久跳转
+Route::permanentRedirect('index','task');//直接设置301
+```
+
 ### 回退路由
 - 使用回退，让不存在的路由自动跳转到你指定的页面去
 - 必须把回退路由放到所有路由的底部
@@ -71,10 +91,49 @@ Route::get('task',function(){
 });
 ```
 
+#### 批量资源路由
+```
+Route::resource([
+    'blogs'=> 'BlogController'
+    ]);
+    
+public function edit($id){
+    return route('blogs.edit',['blog'=>10]);edit默认情况下是blog,所以写id不会被识别。
+    
+Route::resource('blogs',BlogController::class)
+    ->only('index','show');//只生成这两个
+    
+Route::except('blogs',BlogController::class)
+    ->except('index','show');//除这两个之外
+```
+#### api资源路由
+```
+Route::apiResources([
+    'blogs' => 'BlogController'
+]);
+Route:apiresource('blog',BlogController);
+
+php artisan route:list目前路由注册的列表
+php artisan make:controller CommentController --api
+
+http://127.0.0.1:8000/blogs/10/comments/20/edit
+
+public function edit($blog_id, $comment_id)
+{
+    return '编辑博文下的评论，博文id： '.$blog_id.'评论id： '.$comment_id;
+}
+```
+#### 资源路由嵌套
+- Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class);
+- 一般情况下id是独立的，所以不需要父id和子id同时存在；
+为了优化资源现套，通过->shallow()实现浅层套现方法
+Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)->shadow();
+
 # 控制器：接受http请求
 - MVC里的C
 - 用大头方法命名
 - 创建控制器： php artisan make:controller TaskController
+- 创建指定目录的控制器（分目录管理）：php artisan make:controller Admin/UserController
 ```
 namespace App\Http\Controllers;
 Route::get('/task',[TaskController::class, 'index']);//参数二：控制器@方法名
@@ -147,22 +206,6 @@ public function select(){
 Route::get('select',[TaskController::class,'select']);
 ```
 
-
-#### 分组
-```
-Route::prefix('api')->get('task',[TaskController::class,'index']);
-
-Route::group(['prefix'=>'api'],function(){
-    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
-    Route::get('task',[TaskController::class, 'index']);
-});
-//推荐
-Route::prefix('api')->group(function(){
-    Route::get('task/url',[TaskController::class, 'url'])->name('task.index');
-    Route::get('task',[TaskController::class, 'index']);
-});
-
-```
 #### 中间件
 
 #### 子域名 domain
@@ -218,83 +261,124 @@ Route::resource('blogs',BlogControler::cass)
 > 会生成7个方法
 ![serven-method](https://user-images.githubusercontent.com/64322636/156432163-a31bf0cf-fb3c-49a6-9e58-e79fe38e8875.png)
 
-#### 批量资源路由
-```
-Route::resource([
-    'blogs'=> 'BlogController'
-    ]);
-    
-public function edit($id){
-    return route('blogs.edit',['blog'=>10]);edit默认情况下是blog,所以写id不会被识别。
-    
-Route::resource('blogs',BlogController::class)
-    ->only('index','show');//只生成这两个
-    
-Route::except('blogs',BlogController::class)
-    ->except('index','show');//除这两个之外
-
-# api资源路由
-Route::apiResources([
-    'blogs' => 'BlogController'
-]);
-Route:apiresource('blog',BlogController);
-```
-php artisan route:list目前路由注册的列表
-php artisan make:controller CommentController --api
-
-```
-http://127.0.0.1:8000/blogs/10/comments/20/edit
-
-public function edit($blog_id, $comment_id)
-{
-    return '编辑博文下的评论，博文id： '.$blog_id.'评论id： '.$comment_id;
-}
-
-//资源路由嵌套
-Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class);
-
-一般情况下id是独立的，所以不需要父id和子id同时存在；
-为了优化资源现套，通过->shallow()实现浅层套现方法
-Route::resource('blogs.comments',\App\Http\Controllers\CommentController::class)->shadow();
-```
-```
-表单请求：
-public function form(){
-    return view('form');
-}
-    
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          contesnt="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>提交</title>
-</head>
-<body>
-<form action="/task/getform" method="post">
-    <input typw="hidden" name="_token" value="{{csrf_token()}}">;
-    <button type="ssubmit">提交</button>
-</form>
-</body>
-</html>
-
-Route::get('/task/form',[TaskController::class,'form']);
-Route::post('task/getform',function(){
-    return 123;});
-```
-419:为了避免跨站请求伪造攻击，框架提供了CSRF令牌保护，请求验证
-```<input typw="hidden" name="_token" value="{{csrf_token()}}">;```
-- 快捷方法：@csrf 
-
-
-#### 数据库迁移
+## 数据库操作：
+- 执行任意的 insert,update,delete 语句(形象记录的语句使用statement语法)
+> DB::statement("insert into member values(null,'')");
+- 执行任意的select语句(不影响记录的语句使用select语句)
+> DB::select("select * from member");
 - 数据库配置要记得备份
-- 
-php artisan make:migration create_hd_table --create=hd
-php artisan migrate
-#### 数据库配置
+> php artisan make:migration create_hd_table --create=hd
+> php artisan migrate
+> php artisan migrate:refresh
+```
+create table member(
+  id int primary key auto increment,
+  name varchar(32) not null,)
+  
+ SB_HOST:locahost -> 不写本地域名是因为写域名默认远程登陆
+ DB:: -> 在app.php里定义了别名DB,不用写太长的空间方法
+```
+
+### 增加
+- insert():添加一条或多条，返回布尔类型
+- insertGetId():添加一条，返回自增的id
+```
+public function add(){
+    $db = DB::table('users');
+    //定义变量，可以多次反复使用
+    $result = $db -> insert([
+        [
+            'name' => '马冬梅',
+            'email' => 'madongmei@gmial.com',
+            'password' => 'qwerty',
+        ],
+        [
+            'name' => '马春',
+            'email' => 'machun@gmial.com',
+            'password' => 'qwerty',
+        ],
+    ]);
+    dd($result);
+
+    $result = $db -> insertGetId([
+            'name' => '马秋梅',
+            'email' => 'macqiumei@gmial.com',
+            'password' => 'qwerty',
+    ]);
+    dd($result);
+}
+```
+
+### 修改
+- where（字段，运算符，值)
+```
+public function update(){
+    $db = DB::table('users');
+
+    $result = $db -> where('id',14) -> update([
+        'name' => '张三丰',
+    ]);
+    dd($result);//返回收到影响的行数
+}
+
+increment 和 decrement
+DB::table('users') -> increament('votes') 每次加1
+DB::table('users') -> increament('votes',5) 每次加5
+DB::table('users') -> decreament('votes') 每次减1
+DB::table('users') -> decreament('votes',5)每次减5
+```
+
+### 查询
+```
+public function select(){
+    $db = DB::table('users');
+    $data = $db -> where('id','>',3) -> get();
+
+    foreach ($data as $key => $value){
+        echo "id是：{$value -> id},名字是: {$value -> name}.<br/>";
+    }//get查询的结果每一行记录的是对象,value是对象不是数组，所以获取遍历数组用的是箭头
+}
+
+//->where()->where() 并且关系语法
+//->where()->orWhere() 或者关系
+
+输出users表里所有的用户名
+public function select(){
+    $db = DB::table('users');
+    $data = $db -> get();
+    foreach ($data as $datas){
+        echo"{$datas -> name}<br/>";}
+    }
+//返回特定用户的某个字段值
+$data = $db -> where('id',1)->value('email');
+return $data;
+//返回特定用户的多个字段值
+
+//排序
+$db = DB::table('users')
+    ->orderBy('id', 'desc')//倒序
+    ->get();
+return $db;
+
+//分页
+$db = DB::table('users')
+    ->limit(2)
+    ->offset(1)
+    ->get();
+return $db;
+```
+
+### 删除
+- 修改代替删除
+- 物理删除（本质就是删除），逻辑删除（本质是修改）
+- 逻辑删除本质是不把信息显示给用户
+
+```
+$db = DB::table("users");
+$result = $db -> where('id','1')->delete();
+```
+
+### 数据库配置
 - ELOQUENT  ORM 关系型对象映射器来操作数据库；
 - 数据库配置在config/database.php
 - 本地配置在.env
@@ -315,12 +399,12 @@ return Response()->json($user);
 数据库有专有DB，可以查询和构造器查询
 
 
-#### could not driver
-window配置：
-php.ini：
-extension=php_pdo_pgsql.dll  
-extension=php_pgsql.dll  
-重启apache：d:/apache/apache24/bin:httpd –k restart
+#### 报错：could not driver
+- window配置：
+> php.ini：
+> extension=php_pdo_pgsql.dll  
+> extension=php_pgsql.dll  
+- 重启apache：d:/apache/apache24/bin:httpd –k restart
 
 ### 构造器查询
 #### 查询
