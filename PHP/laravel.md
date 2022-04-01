@@ -1,5 +1,5 @@
 laravel:增删改查+循环+判断  
-- 注意： LTS(长期支持）
+- 注意： LTS(长期支持）. 
 - composer是php的appstore: 
 > composer global require laravel/installer - laravel new blog   
 > composer create-project laravel/laravel=5.4.* edu --prefer-dist ./--prefer-dist 优先下载压缩包 
