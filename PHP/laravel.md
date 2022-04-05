@@ -10,7 +10,7 @@ laravel:增删改查+循环+判断。
 - 先读取.env在执行config配置命令，所以要在env里先设置
 - php artisan serve 修改了配置文件需要重启    
 - artisan生成，必须在项目目录下执行。
-bixuan/ 和bixuan是两个url             
+bixuan/ 和bixuan是两个url               
 
 ## 路由：接收HTTP请求的路径/ route提供给控制器  
 - 请求方式（‘请求路由’，匿名函数或控制器响应)
