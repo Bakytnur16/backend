@@ -6,7 +6,7 @@ laravel:增删改查+循环+判断。
 - composer require barryvdh/laravel-ide-helper  
 > php artisan ide-helper:generate 为Facades生成注释  
 > php artisan ide-helper:models 为数据模型生成注释
-> php artisan ide-helper:meta 生成phpstorm meta file
+> php artisan ide-helper:meta 生成phpstorm meta file  
 - 先读取.env在执行config配置命令，所以要在env里先设置
 - php artisan serve 修改了配置文件需要重启    
 - artisan生成，必须在项目目录下执行。
