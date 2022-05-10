@@ -236,3 +236,150 @@ WHERE EXISTS (SELECT count FROM access_log WHERE Websites.id = access_log.site_i
 SELECT MID(name,1,4) AS ShortTitle FROM Websites; 从 "Websites" 表的 "name" 列中提取前 4 个字符  
 SELECT name, url, DATE_FORMAT(Now(),'%Y-%m-%d') AS date FROM Websites;  
 ```
+
+
+### 创建
+```
+CREATE DATABASE my_db;  
+CREATE TABLE table_name  
+(  
+column_name1 data_type(size), LastName varchar(255) NOT NULL  
+column_name2 data_type(size),  
+column_name3 data_type(size),  
+.... ); 
+CREATE INDEX index_name ON table_name (column_name) 
+
+NOT NULL - 不能存储 NULL 值；
+UNIQUE - 保证某列每行必须有唯一的值。
+PRIMARY KEY - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。
+FOREIGN KEY - 保证一个表中的数据匹配另一个表中的值的参照完整性。
+CHECK - 保证列中的值符合指定的条件。
+DEFAULT - 规定没有给列赋值时的默认值。
+AUTO_INCREMENT 
+
+CREATE TABLE IF NOT EXISTS `runoob_tbl`(
+   `runoob_id` INT UNSIGNED AUTO_INCREMENT,
+   `runoob_title` VARCHAR(100) NOT NULL,
+   `runoob_author` VARCHAR(40) NOT NULL,
+   `submission_date` DATE,
+   PRIMARY KEY ( `runoob_id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+my_sql
+
+CREATE TABLE runoob_tbl(
+   -> runoob_id INT NOT NULL AUTO_INCREMENT,
+   -> runoob_title VARCHAR(100) NOT NULL,
+   -> runoob_author VARCHAR(40) NOT NULL,
+   -> submission_date DATE,
+   -> PRIMARY KEY ( runoob_id )
+   -> )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Persons
+(
+    Id_P int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255),
+    PRIMARY KEY (Id_P)  //PRIMARY KEY约束
+)
+CREATE TABLE Persons
+(
+    Id_P int NOT NULL PRIMARY KEY,   //PRIMARY KEY约束
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+)
+
+create table if not exists per(
+  id bigint auto_increment comment '主键',
+  name varchar(20) not null comment '人员姓名',
+  work_id bigint not null comment '工作id',
+  create_time date default '2021-04-02',
+  primary key(id),
+  foreign key(work_id) references work(id)
+)
+
+create table if not exists work(
+  id bigint auto_increment comment '主键',
+  name varchar(20) not null comment '工作名称',
+  create_time date default '2021-04-02',
+  primary key(id)
+)
+
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName)
+)
+
+CREATE TABLE Persons
+(
+P_Id int NOT NULL UNIQUE,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255)
+)
+
+CREATE TABLE Orders
+(
+O_Id int NOT NULL PRIMARY KEY,
+OrderNo int NOT NULL,
+P_Id int FOREIGN KEY REFERENCES Persons(P_Id)
+)
+
+
+TINYINT
+SMALLINT
+MEDIUMINT
+INT / INTEGER
+BIGINT
+FLOAT
+DOUBLE
+DECIMAL
+
+DATE
+TIME
+YEAR
+DATETIME
+TIMESTAMP
+
+CHAR
+VARCHAR
+TINYTEXT
+BLOB
+TEXT
+MEDIUMBLOB
+MEDIUMTEXT
+LONGBLOB
+LONGTEXT
+
+
+CREATE TABLE [database_name.][schema_name.]table_name (
+    pk_column data_type PRIMARY KEY,
+    column_1 data_type NOT NULL,
+    column_2 data_type,
+    ...,
+    table_constraints
+);
+
+CREATE TABLE sales.visits (
+    visit_id INT PRIMARY KEY IDENTITY (1, 1), //相当于mysql auto-inc
+    first_name VARCHAR (50) NOT NULL,
+    last_name VARCHAR (50) NOT NULL,
+    visited_at DATETIME,
+    phone VARCHAR(20),
+    store_id INT NOT NULL,
+    FOREIGN KEY (store_id) REFERENCES sales.stores (store_id)
+);
+
+
+```
