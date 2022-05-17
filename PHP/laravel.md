@@ -297,6 +297,7 @@ Route::resource('blogs',BlogControler::cass)
 ![serven-method](https://user-images.githubusercontent.com/64322636/156432163-a31bf0cf-fb3c-49a6-9e58-e79fe38e8875.png)
 
 ## 数据库操作：
+- php artisan migrate
 - 执行任意的 insert,update,delete 语句(形象记录的语句使用statement语法)
 > DB::statement("insert into member values(null,'')");
 - 执行任意的select语句(不影响记录的语句使用select语句)
