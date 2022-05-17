@@ -1,3 +1,5 @@
+https://zhuanlan.zhihu.com/p/378213815
+
 laravel:增删改查+循环+判断。  
 - 注意： LTS(长期支持）. 
 - composer是php的appstore: 
