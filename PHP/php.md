@@ -78,7 +78,7 @@ Gettype() 获取变量的类型
 Settype() 设置变量的类型 Bool(1:true 0:false(or ’’))
 Isset()	用来判断一个变量是否存在 Bool isset($a);
 Unset()	释放给定的变量	Void
-Empty()	检测一个变量的值是否为空 Bool
+Empty()	检测一个变量的值是否为空 Bool，比如：'0',0,'',null,array(),false
 is_int() is_integer()	检测变量是否是整数 Bool
 Is_string()	检测变量是否是字符串 bool
 Is_numeric	检测变量是否为数字或数字字符串	bool
@@ -102,15 +102,16 @@ $name = $_REQUEST['fname'];
 echo $name; 
 ?>
 
-$GLOBALS	所有全局变量数组
-$_SERVER	服务器环境变量数组
+
+$GLOBALS 所有全局变量数组
+$_SERVER 服务器环境变量数组
 $_GET	通过GET方式传递给该脚本的变量数组
 $_POST	通过POST方式传递给该脚本的变量数组
-$_COOKIE	COOKIE变量数组
+$_COOKIE COOKIE变量数组
 $_FILES	与文件上传相关的变量数组
 $_ENV	环境变量数组
-$_REQUEST	所用用户输入的变量数组
-$_SESSION	会话变量数组
+$_REQUEST 所用用户输入的变量数组
+$_SESSION 会话变量数组
 ```
 
 #### EOF(heredoc)
@@ -595,6 +596,7 @@ if ($test>1)
 - Try - 使用异常的函数应该位于 "try" 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。
 - Throw - 里规定如何触发异常。每一个 "throw" 必须对应至少一个 "catch"。
 - Catch - "catch" 代码块会捕获异常，并创建一个包含异常信息的对象
+- set_exception_handler() 函数可设置处理所有未捕获异常的用户定义函数。
 ```
 function user($x){
     if($x !== "jack"){
