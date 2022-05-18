@@ -5,8 +5,20 @@ https://zhuanlan.zhihu.com/p/24035779
 - PHP：Hypertext Preprocessor 超文本预处理器  
 - PHP 脚本在服务器上执行。    
 - 注释： // /* */[shift+ctrl+/]  
-- PHP是动态语言，是一种非常弱的类型语言，在程序运行时，可以动态的改变变量的类型。  
-- 
+- PHP是动态语言，是一种非常弱的类型语言，在程序运行时，可以动态的改变变量的类型。   
+
+## 规范：
+namespace Vendor\Model;  
+类的常量中所有字母都必须大写，词间以下划线分隔。   
+类的属性命名可以遵循 大写开头的驼峰式，小写开头的驼峰式，下划线分隔式   
+方法名称必须符合 camelCase() 式的小写开头驼峰命名规范。  
+
+所有PHP文件必须使用Unix LF (linefeed)作为行的结束符。  
+所有PHP文件必须以一个空白行作为结束。  
+纯PHP代码文件必须省略最后的 ?> 结束标签。  
+每行不应该多于80个字符  
+代码必须使用4个空格符的缩进，一定不能用 tab键 。  
+不要使用下划线作为前缀，来区分属性是 protected 或 private。  
 
 #### 打印
 - 单引号和双引号有区别  
@@ -425,6 +437,25 @@ foreach( $num as $i){
 ?>
 ```
 
+#### 时间/日期
+- echo date("Y/m/d").PHP_EOL;
+- echo date("d/m/Y");
+- 戳（Unix Timestamp); Unix 时间戳(Unix timestamp)，或称Unix 时间(Unix time)、POSIX 时间(POSIX time)  
+```
+echo date("Y-m-d");
+checkdate()函数能够很好地验证日期，提供的日期如果有效，则返回true  
+date()函数返回根据预定义指令格式化时间和日期的字符串形式  
+gettimeofday()函数返回与当前时间有关的元素所组成的一个关联数组   
+getdate()函数接受一个时间戳，并返回一个由其各部分组成的关联数组。  
+time()函数可以获取当前的时间戳，并且可以通过设置时间戳的值。   
+mktime()函数可以生成给定日期时间的时间戳。  
+strtotime()将人可读的日期转换为Unix 时间戳。  
+getlastmod()可以得到当前文件最后修改时间的时间戳   
+putenv()函数可以设置当前的默认时区。  
+date_default_timezone_set()可以设置当前的默认时区。  
+localtime()函数可以取得本地时间数据，然后返回一个数组。  
+```
+
 #### 命名空间 
 namespace MyProject;  
 为了区别同样的函数或者类或者常量，通过命名空间区分。
@@ -474,6 +505,158 @@ interface iTemplate
 
 // 实现接口
 class Template implements iTemplate
+```
+
+- include 和 require 语句用于在执行流中插入写在其他文件中的有用的代码。
+
+# 文件：
+1. 引用文件有两个方法：
+> include（"文件名"）和require "文件名";
+- Include后面如果还有其他代码，当调用include出错时，后面的代码还会继续执行，但是require则不会。Include在调用一个不存在的文件时，会给出警告，但是会继续执行后面的代码。
+- **require** 生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。require 一般放在 PHP 文件的最前面，程序在执行前就会先导入要引用的文件；
+```
+fopen — 打开文件或者 URL  
+fclose — 关闭一个已打开的文件指针  
+fgets - 读取文件内容
+basename — 返回路径中的文件名部分  
+dirname — 返回路径中的目录部分  
+pathinfo — 返回文件路径的信息  
+realpath — 返回规范化的绝对路径名  
+filesize — 取得文件大小  
+disk_free_space — 返回目录中的可用空间  
+disk_total_space — 返回一个目录的磁盘总大小  
+fileatime — 取得文件的上次访问时间  
+filectime — 取得文件的 inode 修改时间  
+filemtime — 取得文件修改时间  
+fwrite — 写入文件（可安全用于二进制文件） 
+file_exists — 检查文件或目录是否存在  
+feof — 测试文件指针是否到了文件结束的位置  
+
+<?php
+$fp = fopen('file1.txt','w');
+$outStr = "my name is anllin,\r\nmy age is 29.";
+fwrite($fp,$outStr,strlen($outStr));
+fclose($fp);
+?>
+
+r 只读 r+ 读写指针在开头 w写 w+ 读写指针在末尾
+r	只读。在文件的开头开始。
+r+	读/写。在文件的开头开始。
+w	只写。打开并清空文件的内容；如果文件不存在，则创建新文件。
+w+	读/写。打开并清空文件的内容；如果文件不存在，则创建新文件。
+a	追加。打开并向文件末尾进行写操作，如果文件不存在，则创建新文件。
+a+	读/追加。通过向文件末尾写内容，来保持文件内容。
+x	只写。创建新文件。如果文件已存在，则返回 FALSE 和一个错误。
+x+	读/写。创建新文件。如果文件已存在，则返回 FALSE 和一个错误。
+```
+
+### 错误/异常处理
+- 基本错误，使用 die()
+- 错误和异常的区别
+>  错误：一个合理的程序不能截获的严重问题；
+>  异常：大部分是语法和语义错误
+```
+错误处理器：
+error_function(error_level,error_message,error_file,error_line,error_context)
+error_message	必需。为用户定义的错误规定错误消息。
+error_file	可选。规定错误发生的文件名。
+error_line	可选。规定错误发生的行号。
+error_context	可选。规定一个数组，包含了当错误发生时在用的每个变量以及它们的值。
+error_level	必需。为用户定义的错误规定错误报告级别。必须是一个数字。
+参见下面的表格：错误报告级别。
+2	E_WARNING	非致命的 run-time 错误。不暂停脚本执行。
+8	E_NOTICE	run-time 通知。在脚本发现可能有错误时发生，但也可能在脚本正常运行时发生。
+256	E_USER_ERROR	致命的用户生成的错误。这类似于程序员使用 PHP 函数 trigger_error() 设置的 E_ERROR。
+512	E_USER_WARNING	非致命的用户生成的警告。这类似于程序员使用 PHP 函数 trigger_error() 设置的 E_WARNING。
+1024	E_USER_NOTICE	用户生成的通知。这类似于程序员使用 PHP 函数 trigger_error() 设置的 E_NOTICE。
+4096	E_RECOVERABLE_ERROR	可捕获的致命错误。类似 E_ERROR，但可被用户定义的处理程序捕获。（参见 set_error_handler()）
+8191	E_ALL	所有错误和警告。（在 PHP 5.4 中，E_STRICT 成为 E_ALL 的一部分）
+
+在脚本中用户输入数据的位置，当用户的输入无效时触发错误是很有用的。在 PHP 中，这个任务由 trigger_error() 函数完成。
+
+<?php
+function customError($errno, $errstr)
+{
+    echo "<b>Error:</b> [$errno] $errstr<br>";
+    echo "脚本结束";
+    die();
+}
+set_error_handler("customError",E_USER_WARNING);
+
+// 触发错误
+$test=2;
+if ($test>1)
+{
+    trigger_error("变量值必须小于等于 1",E_USER_WARNING);
+}
+?>
+```
+- 异常处理
+- Try - 使用异常的函数应该位于 "try" 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。
+- Throw - 里规定如何触发异常。每一个 "throw" 必须对应至少一个 "catch"。
+- Catch - "catch" 代码块会捕获异常，并创建一个包含异常信息的对象
+```
+function user($x){
+    if($x !== "jack"){
+        throw new Exception("login wrong");
+    }
+}try{
+    user('bob');
+    echo "hello,bob";
+}catch(Exception $e){
+    echo 'message: '.$e->getMessage();
+}
+```
+
+### php cookie
+- cookie常用于识别用户。cookie 是一种服务器留在用户计算机上的小文件。每当同一台计算机通过浏览器请求页面时，这台计算机将会发送 cookie。通过 PHP，您能够创建并取回 cookie 的值  
+- setcookie() 函数用于设置 cookie  
+- setcookie(name, value, expire, path, domain); exipre过期时间  
+```
+添加：
+setcookie("user","shuak",time()+60 秒为单位；
+
+查看：
+print_r($_COOKIE);
+echo $_COOKIE["user"]; //输出cookie值
+
+echo isset($_COOKIE["user"])? "wellcome".$_COOKIE["user"].PHP_EOL:
+    "HELLO WORLD";
+    
+删除：
+setcookie("user", "", time()-3600);//-3600过去一个小时
+```
+
+### php session
+- PHP session 变量用于存储关于用户会话（session）的信息，或者更改用户会话（session）的设置。Session 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。
+```
+session_start();
+
+$_SESSION['name'] = 1; //添加session
+
+isset($_SESSION['name']) ? $_SESSION['name'] += 1 : $_SESSION['name']=1;
+echo "浏览量".$_SESSION['name'];
+
+unset($_SESSION['name']); //销毁某个session
+
+session_destroy(); //销毁所有
+```
+
+### php mail
+- mail(to,subject,message,headers,parameters):
+> to - mail 接收者
+> sunject mail 主题
+> message 内容
+> headers 附加标题 可选
+> parameters 可选 额外参数
+```
+$to = "xxx@gmail.com";
+$subject = "hello world";
+$message = "this is a mail";
+$from = "zzz@gmail.com";
+$headers = "From:".$from; // 头部信息设置
+mail($to,$subject,$message,$headers);
+echo "已发送邮件";
 ```
 
 ## 表单  
@@ -705,23 +888,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 ```
 
-### 时间
-戳（Unix Timestamp）。Unix 时间戳(Unix timestamp)，或称Unix 时间(Unix time)、POSIX 时间(POSIX time)  
-```echo date("Y-m-d");```
-checkdate()函数能够很好地验证日期，提供的日期如果有效，则返回true  
-date()函数返回根据预定义指令格式化时间和日期的字符串形式  
-gettimeofday()函数返回与当前时间有关的元素所组成的一个关联数组   
-getdate()函数接受一个时间戳，并返回一个由其各部分组成的关联数组。  
-time()函数可以获取当前的时间戳，并且可以通过设置时间戳的值。   
-mktime()函数可以生成给定日期时间的时间戳。  
-strtotime()将人可读的日期转换为Unix 时间戳。  
-getlastmod()可以得到当前文件最后修改时间的时间戳   
-putenv()函数可以设置当前的默认时区。  
-date_default_timezone_set()可以设置当前的默认时区。  
-localtime()函数可以取得本地时间数据，然后返回一个数组。  
-
-```<?php include 'header.php'; ?>
-fopen() 函数用于在 PHP 中打开文件。	
+```	
 	
 <?php
 session_start();
@@ -741,70 +908,3 @@ mail(to,subject,message,headers,parameters)
 
 
 ```
-	
-# 异常和错误
-Try - 使用异常的函数应该位于 "try" 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。
-Throw - 里规定如何触发异常。每一个 "throw" 必须对应至少一个 "catch"。
-Catch - "catch" 代码块会捕获异常，并创建一个包含异常信息的对象
-
-PHP 过滤器用于验证和过滤来自非安全来源的数据。
-```	
-<?php
-$servername = "localhost";
-$username = "";
-$password = "";
- 
-// 创建连接
-$conn = new mysqli($servername, $username, $password);
- 
-// 检测连接
-if ($conn->connect_error) {
-    die("连接失败: " . $conn->connect_error);
-} 
-echo "连接成功";
-?>```
-
-	
-#文件：
-引用文件有两个方法：
-include（"文件名"）;和
-require "文件名";
-Include后面如果还有其他代码，当调用include出错时，后面的代码还会继续执行，但是require则不会。
-Include在调用一个不存在的文件时，会给出警告，但是会继续执行后面的代码。
-
-basename — 返回路径中的文件名部分  
-dirname — 返回路径中的目录部分  
-pathinfo — 返回文件路径的信息  
-realpath — 返回规范化的绝对路径名  
-filesize — 取得文件大小  
-disk_free_space — 返回目录中的可用空间  
-disk_total_space — 返回一个目录的磁盘总大小  
-fileatime — 取得文件的上次访问时间  
-filectime — 取得文件的 inode 修改时间  
-filemtime — 取得文件修改时间  
-fopen — 打开文件或者 URL  
-fclose — 关闭一个已打开的文件指针  
-fwrite — 写入文件（可安全用于二进制文件） 
-file_exists — 检查文件或目录是否存在  
-feof — 测试文件指针是否到了文件结束的位置  
-r 只读 r+ 读写指针在开头 w写 w+ 读写指针在末尾
-```
-<?php
-$fp = fopen('file1.txt','w');
-$outStr = "my name is anllin,\r\nmy age is 29.";
-fwrite($fp,$outStr,strlen($outStr));
-fclose($fp);
-?>
-```
-规范：
-namespace Vendor\Model;  
-类的常量中所有字母都必须大写，词间以下划线分隔。   
-类的属性命名可以遵循 大写开头的驼峰式，小写开头的驼峰式，下划线分隔式   
-方法名称必须符合 camelCase() 式的小写开头驼峰命名规范。  
-
-所有PHP文件必须使用Unix LF (linefeed)作为行的结束符。  
-所有PHP文件必须以一个空白行作为结束。  
-纯PHP代码文件必须省略最后的 ?> 结束标签。  
-每行不应该多于80个字符  
-代码必须使用4个空格符的缩进，一定不能用 tab键 。  
-不要使用下划线作为前缀，来区分属性是 protected 或 private。  
