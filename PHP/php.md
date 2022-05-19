@@ -133,6 +133,16 @@ EOF;
 echo $a;
 多行输入符
 ```
+ #### 正则表达式
+```
+preg_grep()函数搜索数组中的所有元素
+preg_match()函数在字符串中搜索模式
+preg_match_all()函数在字符串中匹配模式的所有出现
+preg_quote()在每个对于正则表达式语法而言有特殊含义的字符前插入一个反斜线
+preg_replace()函数搜索到所有匹配，然后替换成想要的字符串返回出来。
+preg_replace_callback()和 preg_split()用来分割不同的元素。  
+```
+
 # 数据类型   
  PHP var_dump() 函数返回变量的数据类型和值 
  ```
@@ -169,26 +179,32 @@ substr_count()返回一个字符串在另一个字符串中出现的次数。
 可以使用函数strlen()来检查字符串的长度  
 替换字符串：str_replace()、str_ireplace()、substr_replace()  
 ```
- 
- #### 正则表达式
- preg_grep()函数搜索数组中的所有元素、preg_match()preg_match()函数在字符串中搜索模式、preg_match_all()函数在字符串中匹配模式的所有出现、preg_quote()在每个对于正则表达式语法而言有特殊含义的字符前插入一个反斜线、preg_replace()函数搜索到所有匹配，然后替换成想要的字符串返回出来。、preg_replace_callback()和 preg_split()用来分割不同的元素。  
-
 
 ### Integer（整型）
 - 整型可以用三种格式来指定：十进制， 十六进制（ 以 0x 为前缀）或八进制（前缀为 0） 
 ``` 
 Rand()函数是libc中定义的一个随机函数的简单包装器。$a = rand(0,10);  
+getrandmax()  
 Mt_rand()函数是一个很好的代替实现. $b = mt_rand(0,10);  
+mt_rand() 则是用了 Mersenne Twister 中已知的特性作为随机数发生器，它产生随机数值的平均速度比 libc 提供的 rand() 快四倍。
 Abs()	取绝对值  
 Floor()	舍去法取整： 18.999为19，取小  
 Ceil()	进一法取整:18.3为19，但凡有点小数点都取大一的数字；  
 Round()	四舍五入  
 Min()	求最小值或数组中最小值  
 Max()	求最大值或数组中最大值  
+
+加密：
+echo md5('123456');
+echo sha1('123456');
 ```
 
 ### Float（浮点型）可以有指数
 double
+```
+$a = 123.4423;
+echo number_format($a,2); //设置保留小数点
+```
 
 ### Boolean（布尔型）
 > $x=true; $y=false;
@@ -225,6 +241,12 @@ $cars[2]="Toyota";
     ksort() - 根据关联数组的键，对数组进行升序排列
     arsort() - 根据关联数组的值，对数组进行降序排列
     krsort() - 根据关联数组的键，对数组进行降序排列
+    
+$cars = array("voloe","boolm","toyota");
+rsort($cars);
+foreach ($cars as $i){
+    echo $i.PHP_EOL;
+}
 ```
 
 #### 关联数组（像字典）  
@@ -445,6 +467,12 @@ foreach( $num as $i){
 ```
 echo date("Y-m-d");
 checkdate()函数能够很好地验证日期，提供的日期如果有效，则返回true  
+
+<?php if (checkdate(2,29,2007)) {
+ echo '日期合法';
+} else { echo '日期不合法';
+} ?>
+
 date()函数返回根据预定义指令格式化时间和日期的字符串形式  
 gettimeofday()函数返回与当前时间有关的元素所组成的一个关联数组   
 getdate()函数接受一个时间戳，并返回一个由其各部分组成的关联数组。  
@@ -516,21 +544,34 @@ class Template implements iTemplate
 - Include后面如果还有其他代码，当调用include出错时，后面的代码还会继续执行，但是require则不会。Include在调用一个不存在的文件时，会给出警告，但是会继续执行后面的代码。
 - **require** 生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。require 一般放在 PHP 文件的最前面，程序在执行前就会先导入要引用的文件；
 ```
+$path = 'ne.txt';
+$path = realpath($path); realpath — 返回规范化的绝对路径名  
+echo basename($path);  — 返回路径中的文件名部分  
+echo dirname($path);  — 返回路径中的目录部分 
+print_r(pathinfo($path));
+
+Array
+(
+    [dirname] => F:\xxx_php
+    [basename] => ne.txt
+    [extension] => txt
+    [filename] => ne
+)
+
+
 fopen — 打开文件或者 URL  
 fclose — 关闭一个已打开的文件指针  
 fgets - 读取文件内容
-basename — 返回路径中的文件名部分  
-dirname — 返回路径中的目录部分  
-pathinfo — 返回文件路径的信息  
-realpath — 返回规范化的绝对路径名  
+fwrite — 写入文件（可安全用于二进制文件） 
+file_exists — 检查文件或目录是否存在  
+
 filesize — 取得文件大小  
 disk_free_space — 返回目录中的可用空间  
 disk_total_space — 返回一个目录的磁盘总大小  
+
 fileatime — 取得文件的上次访问时间  
 filectime — 取得文件的 inode 修改时间  
 filemtime — 取得文件修改时间  
-fwrite — 写入文件（可安全用于二进制文件） 
-file_exists — 检查文件或目录是否存在  
 feof — 测试文件指针是否到了文件结束的位置  
 
 <?php
