@@ -484,6 +484,12 @@ putenv()函数可以设置当前的默认时区。
 date_default_timezone_set()可以设置当前的默认时区。  
 localtime()函数可以取得本地时间数据，然后返回一个数组。  
 ```
+### kinter
+```
+$service = new \Modules\Backcore\Services\FormulaHelpersService()
+$service->addToOrganRegistry(['bin' => '000000000001','name' => ['ru' => 'onlytest',
+'kk' => 'onlytest'],]);
+```
 
 #### 命名空间 
 namespace MyProject;  
