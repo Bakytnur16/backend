@@ -8,7 +8,7 @@ https://zhuanlan.zhihu.com/p/24035779
 - PHP是动态语言，是一种非常弱的类型语言，在程序运行时，可以动态的改变变量的类型。   
 
 ## 规范：
-namespace Vendor\Model;  
+namespace Vendor\Model;    
 类的常量中所有字母都必须大写，词间以下划线分隔。   
 类的属性命名可以遵循 大写开头的驼峰式，小写开头的驼峰式，下划线分隔式   
 方法名称必须符合 camelCase() 式的小写开头驼峰命名规范。  
