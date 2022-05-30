@@ -12,37 +12,83 @@ laravel:增删改查+循环+判断。
 - 先读取.env在执行config配置命令，所以要在env里先设置
 - php artisan serve 修改了配置文件需要重启    
 - artisan生成，必须在项目目录下执行。
-bixuan/ 和bixuan是两个url                 
+bixuan/ 和bixuan是两个url        
 
-## 路由：接收HTTP请求的路径/ route提供给控制器  
-- 请求方式（‘请求路由’，匿名函数或控制器响应)
+# 目录结构：
+- app是程序的核心代码目录
+- bootstrap 启动框架的app.php
+- lang包含所有应用程序的语言文件
+- public里的index.php是应用程序的所有入口文件
+- web.php ：如果应用程序不提供无状态的restful api 那路由在web文件里
+- 这些路由是无状态的，因此通过这些路由进入应用程序的请求旨在 [通过令牌（/docs/laravel/9.x/sanctum）进行身份验证，并且无法访问会话状态
+- 
+
+# 路由：接收HTTP请求的路径/ route提供给控制器  
+- 请求方式（‘请求路由’，匿名函数或控制器响应) = put/get/delete/any('name',func/contr/view)
 - 必选参数{参数}，可选参数{参数?}
-- match(匹配)指定多个路由,any(任何）：
 ```
-Route::get('/',function(){
-  return view('welcome');});
-  
-Route::match(['get','post'],'/',function(){
-  return 'hello world';})->name('名字'); //起名
-
-Route::get('/', function () {
-    return 'hello world';
-});
-
-Route::get('index/{id}',function($id){ //参数，动态变量
-    return 'hello world'.$id;
-})
-
-Route::get()
-Route::post()
+Route::get($uri, $callback);
+Route::post($uri, $callback);
+Route::put($uri, $callback);
+Route::patch($uri, $callback);
+Route::delete($uri, $callback);
+Route::options($uri, $callback);
 Route::any()接受任何请求；
+Route::redirect('/here','/there',301); 重定向路由
+Route::view($url,$view) 视图路由
+Route::permanentRedirect('/here', '/there');返回状态
 Route::match()接受特定的提交方式：
-
 Route::match(['get','post'],'index',function() //必须有三个参数
-{
-  return 'hello world';
-});
 
+Route::get('/',function(){return view('welcome');})->name('名字'); //起名;
+
+Route::get('index/{id？}',function($id){return 'hello world'.$id;})//参数，动态变量
+
+Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {});
+
+use Illuminate\Http\Request;
+Route::get('/user/{id}', function (Request $request, $id) {
+    return 'User '.$id;});依赖关系之后列出路由参数
+
+Route::get('/user/{name?}',function($name='john'){
+    return $name;});
+    
+正则表达式
+Route::get('/user/{name}', function ($name) {
+    //
+})->where('name', '[A-Za-z]+');
+
+Route::get('/user/{id}', function ($id) {
+    return $id;
+})->where('id', '[0-9]+');
+
+Route::get('/user/{id}/{name}', function ($id, $name) {
+    //
+})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+常见的正则表达函数
+Route::get('/user/{id}/{name}', function ($id, $name) {
+    //
+})->whereNumber('id')->whereAlpha('name');
+
+Route::get('/user/{name}', function ($name) {
+    //
+})->whereAlphaNumeric('name');
+
+Route::get('/user/{id}', function ($id) {
+    //
+})->whereUuid('id');
+
+如果是全局约束：
+如果你希望路由参数始终受给定正则表达式的约束，你可以使用 pattern 方法。 你应该在 App\Providers\RouteServiceProvider 类的 boot 方法中定义这些模式：
+public function boot()
+{
+    Route::pattern('id', '[0-9]+');
+}
+
+Laravel 路由组件允许除 / 之外的所有字符出现在路由参数值中。 你必须使用 where 条件正则表达式明确允许 / 成为占位符的一部分：
+Route::get('/search/{search}', function ($search) {
+    return $search;
+})->where('search', '.*');
 ```
 ### 路由命名
 - 给路由命名可以生成url地址或进行重定向
@@ -733,3 +779,7 @@ unique:字段唯一
 
 
 git clone --recurse-submodules 
+
+
+
+将 Laravel 中的各种服务「注册」到「Laravel 服务容器」，这样才能在后续处理 HTTP 请求时使用这些服务
